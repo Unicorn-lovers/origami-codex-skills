@@ -1,0 +1,30 @@
+{
+  "model": "replace-me",
+  "source_cp": "pattern.cp",
+  "defox_project": "sequence.defox",
+  "states": [
+    {
+      "id": "000",
+      "cp": "states/000.cp",
+      "description": "unfolded sheet",
+      "zero_thickness_validation": "pending"
+    }
+  ],
+  "transitions": [
+    {
+      "from": "000",
+      "to": "001",
+      "operation": "replace-me",
+      "changed_creases": [],
+      "moving_packet": "replace-me",
+      "stationary_packet": "replace-me",
+      "layer_access": "replace-me",
+      "temporary_opening": null,
+      "visible_landmarks_before": [],
+      "visible_landmarks_after": [],
+      "collision_review": "pending",
+      "thickness_hotspots": [],
+      "physical_test": "not-run"
+    }
+  ]
+}

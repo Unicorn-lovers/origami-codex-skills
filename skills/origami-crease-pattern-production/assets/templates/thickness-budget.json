@@ -1,0 +1,31 @@
+{
+  "paper": {
+    "thickness_mm": 0.08,
+    "thickness_basis": "measured-caliper",
+    "effective_thickness_factor": 1.0,
+    "sheet_size_mm": [350, 350]
+  },
+  "limits": {
+    "max_stack_mm": null,
+    "max_stack_to_feature_ratio": null,
+    "min_gap_margin_mm": 0.0,
+    "min_clearance_margin_mm": 0.0
+  },
+  "regions": [
+    {
+      "id": "body-core",
+      "step": "replace-me",
+      "layers": 12,
+      "feature_width_mm": null,
+      "available_gap_mm": null
+    }
+  ],
+  "creases": [
+    {
+      "id": "wing-root",
+      "step": "replace-me",
+      "wrap_layers": 4,
+      "available_clearance_mm": null
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+interface:
+  display_name: "折り紙展開図プロダクション"
+  short_description: "展開図・DEFOX折順・紙厚を一括設計し、再現可能な証拠を出力します"
+  brand_color: "#E76F51"
+  default_prompt: "Use $origami-crease-pattern-production to generate and batch-validate crease-pattern candidates, build a DEFOX folding sequence, and evaluate paper thickness with reproducible evidence."
