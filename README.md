@@ -1,16 +1,19 @@
-# Origami Codex Skills
+# Origami Codex Skill
 
-折り紙の展開図を設計・検証するためのCodexスキル集です。
+折り紙の展開図を設計・検証するためのCodexスキルです。
 
 ## Skills
 
 ### `origami-crease-pattern-generator`
 
-1件の展開図作成・編集向けです。題材の特徴とフラップ構成を計画し、Oriedita互換の `.cp` を生成して、平坦折り計算と折り上がりを検証します。
+題材の特徴とフラップ構成を計画し、Oriedita互換の `.cp` を生成・編集して、必要な深さまで検証します。
 
-### `origami-crease-pattern-production`
+通常は1件の展開図を扱うStandardモードを使います。次の要求がある場合だけ、同じスキル内のProductionモードへ進みます。
 
-複数候補の探索や納品品質の検証向けです。バッチ評価、DEFOX用の折り工程、紙厚予算、再現可能な検証記録まで扱います。
+- 複数候補の探索とバッチ評価
+- 再現可能な検証記録
+- DEFOX用の折り工程
+- 紙厚予算と実紙向けの評価
 
 ## Install
 
@@ -19,17 +22,18 @@
 ```bash
 git clone https://github.com/Unicorn-lovers/origami-codex-skills.git
 cp -R origami-codex-skills/skills/origami-crease-pattern-generator ~/.codex/skills/
-cp -R origami-codex-skills/skills/origami-crease-pattern-production ~/.codex/skills/
 ```
 
-Codexを再起動すると、`$origami-crease-pattern-generator` と `$origami-crease-pattern-production` として利用できます。
+Codexを再起動すると、`$origami-crease-pattern-generator` として利用できます。
+
+旧版の `$origami-crease-pattern-production` をインストール済みの場合は、統合後に `~/.codex/skills/origami-crease-pattern-production` を削除してからCodexを再起動してください。
 
 ## Requirements
 
 - Python 3
 - Node.js
 - Orieditaのビルド済みJAR、または利用可能なOriedita MCP
-- production版の追加検証を使う場合は、各リファレンスに記載された外部検証器
+- Productionモードの追加検証を使う場合は、各リファレンスに記載された外部検証器
 
 Oriedita JARが自動検出されない場合は、`ORIEDITA_JAR` に絶対パスを設定します。
 

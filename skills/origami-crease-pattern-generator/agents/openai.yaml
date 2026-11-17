@@ -1,5 +1,5 @@
 interface:
-  display_name: "折り紙展開図ジェネレーター"
-  short_description: "題材から創作折り紙を設計し、展開図と平坦折りを検証します"
+  display_name: "折り紙展開図設計・検証"
+  short_description: "単一CPから複数候補・折順・紙厚まで段階的に設計検証します"
   brand_color: "#E63946"
-  default_prompt: "Use $origami-crease-pattern-generator to invent an origami subject and deliver its validated editable crease pattern."
+  default_prompt: "Use $origami-crease-pattern-generator to design an editable origami crease pattern and apply only the validation depth this task needs."

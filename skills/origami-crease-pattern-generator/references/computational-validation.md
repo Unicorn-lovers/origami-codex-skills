@@ -11,9 +11,11 @@ Keep these results separate:
 3. **Global flat state:** a consistent layer ordering exists for all overlapping faces.
 4. **Rigid-face geometry:** every folded face preserves its pairwise distances; the face areas tile one sheet and the graph remains connected.
 5. **Feature fidelity:** named tips remain distinct and required visible tips lie on the actual silhouette.
-6. **Physical model:** a continuous folding sequence, paper thickness, collision handling, and three-dimensional finishing work in real paper.
+6. **Sequence model:** ordered endpoint states, moving packets, layer access, and collision review for each transition.
+7. **Positive thickness:** stack and wrapping-crease budgets computed from paper caliper and the adopted layer order.
+8. **Physical model:** the continuous sequence, finite paper thickness, collisions, hand access, and three-dimensional finishing work succeed in real paper.
 
-Oriedita completion supports levels 1–3 for its selected state. A second global solver or an independent constraint encoding is valuable for complex CPs. Geometry and feature audits support levels 4–5. Only a physical trial supports level 6.
+Oriedita completion supports levels 1–3 for its selected state. A second global solver or an independent constraint encoding is valuable for complex CPs. Geometry and feature audits support levels 4–5. DEFOX evidence and the sequence plan support level 6. The thickness report supports level 7. Only a physical trial supports level 8.
 
 ## Flat-Folder-style state audit
 
