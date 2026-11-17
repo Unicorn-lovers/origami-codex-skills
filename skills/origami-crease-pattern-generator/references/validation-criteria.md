@@ -6,9 +6,11 @@ Report each level separately. Passing one level does not imply the next.
 2. **Local flat-foldability** — Oriedita reports zero local violations. This is stronger than a plausible-looking drawing but is not sufficient by itself.
 3. **Calculated flat-folded state** — Oriedita starts and completes the folding calculation and returns folded-model data.
 4. **Target fidelity** — the completed silhouette, flap count, proportions, and visible sides match the user's requested subject. This needs visual or geometric review.
-5. **Practical foldability** — a usable folding sequence exists and the model is physically reasonable with real paper. Oriedita's completed state does not prove this.
+5. **Sequence representation** — ordered valid states and documented transitions exist, with moving packets, layer access, collision review, and DEFOX diagram evidence when requested.
+6. **Positive-thickness budget** — measured or explicitly estimated caliper, adopted layer counts, stack hotspots, and wrapping-crease clearances have been evaluated. This remains a screening calculation.
+7. **Practical foldability** — the complete sequence has been folded successfully from the intended real paper. Oriedita, DEFOX, and the thickness budget do not individually prove this.
 
-The bundled validator marks `success: true` only for levels 1–3. Describe levels 4 and 5 from evidence; never infer them automatically.
+The bundled Oriedita validator marks `success: true` only for levels 1–3. Describe levels 4–7 from their separate evidence; never infer them automatically.
 
 ## Failure interpretation
 
