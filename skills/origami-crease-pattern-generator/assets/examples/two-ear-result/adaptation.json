@@ -1,0 +1,60 @@
+{
+  "base": "blintz-base",
+  "source_sha256": "017b1a8a6bf26f81bcb8781787b7afda9777d4b8b404c79c7bedfe00b565a253",
+  "candidate_sha256": "ae9a1a3226488500a628c97448f4e777a792ae74658d55ae6faa02fcb84b0567",
+  "source_region_conflicts": [],
+  "landmarks_normalized": {
+    "Head root": [
+      0.25,
+      0.25
+    ],
+    "Body panel": [
+      0.5,
+      0.5
+    ],
+    "Tail": [
+      1,
+      1
+    ],
+    "Left ear": [
+      0,
+      0.22499999999999998
+    ],
+    "Right ear": [
+      0,
+      0
+    ]
+  },
+  "validation": "calculated_flat_fold",
+  "physical_trial": "untested",
+  "folded_landmarks": {
+    "Head root": [
+      172.0,
+      104.0
+    ],
+    "Body panel": [
+      482.0,
+      274.0
+    ],
+    "Tail": [
+      1102.0,
+      614.0
+    ],
+    "Left ear": [
+      -74.99999999999997,
+      150.0
+    ],
+    "Right ear": [
+      0.0,
+      0.0
+    ]
+  },
+  "folded_view": "Oriedita layer cells",
+  "on_projected_outline": {
+    "Head root": false,
+    "Body panel": false,
+    "Tail": true,
+    "Left ear": true,
+    "Right ear": true
+  }
+}

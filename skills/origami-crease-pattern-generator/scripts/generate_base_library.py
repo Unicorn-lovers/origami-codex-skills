@@ -36,11 +36,11 @@ def preliminary_base() -> list[Segment]:
     center = point(0.5, 0.5)
     return split_square_boundary() + [
         ("M", point(0, 0), center),
-        ("M", point(1, 0), center),
         ("M", point(1, 1), center),
-        ("M", point(0, 1), center),
         ("V", point(0.5, 0), center),
         ("V", center, point(0.5, 1)),
+        ("V", point(0, 0.5), center),
+        ("V", center, point(1, 0.5)),
     ]
 
 
@@ -63,6 +63,29 @@ def blintz_base() -> list[Segment]:
         ("M", point(0.5, 1), point(0, 0.5)),
         ("M", point(0, 0.5), point(0.5, 0)),
     ]
+
+
+def kite_base() -> list[Segment]:
+    slope = math.sqrt(2.0) - 1.0
+    origin = point(0, 0)
+    right, top = point(1, slope), point(slope, 1)
+    return boundary([origin, point(1, 0), right, point(1, 1), top, point(0, 1), origin]) + [
+        ("V", origin, right), ("V", origin, top),
+    ]
+
+
+def windmill_base() -> list[Segment]:
+    # One quarter of a rotationally symmetric pinwheel. The mountain gusset
+    # points to the adjacent side midpoint; all four corners swivel the same way.
+    result = split_square_boundary()
+    anchor, adjacent = point(0.25, 0.25), point(0.75, 0.25)
+    corner, side_midpoint = point(0, 0), point(0, 0.5)
+    for _ in range(4):
+        result.extend([("V", anchor, adjacent), ("V", anchor, corner), ("M", anchor, side_midpoint)])
+        anchor, adjacent, corner, side_midpoint = [
+            (1000 - y, x) for x, y in (anchor, adjacent, corner, side_midpoint)
+        ]
+    return result
 
 
 def bird_base() -> list[Segment]:
@@ -131,6 +154,8 @@ def frog_base() -> list[Segment]:
 
 
 BASES = {
+    "kite-base": kite_base,
+    "windmill-base": windmill_base,
     "preliminary-base": preliminary_base,
     "waterbomb-base": waterbomb_base,
     "blintz-base": blintz_base,

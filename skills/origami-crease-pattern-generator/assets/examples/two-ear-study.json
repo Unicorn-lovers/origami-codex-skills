@@ -1,0 +1,13 @@
+{
+  "base": "blintz-base",
+  "assignments": {
+    "Head root": "inward-a1",
+    "Body panel": "surface-a",
+    "Tail": "inward-b1"
+  },
+  "operations": [
+    {"op": "release_corner", "flap": "inward-a1"},
+    {"op": "split_tip", "flap": "inward-a1", "fraction": 0.6, "children": ["Left ear", "Right ear"]},
+    {"op": "release_corner", "flap": "inward-b1"}
+  ]
+}

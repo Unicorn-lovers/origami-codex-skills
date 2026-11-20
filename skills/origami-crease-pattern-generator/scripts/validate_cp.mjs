@@ -3,13 +3,13 @@
 import { randomBytes } from "node:crypto";
 import { spawn, spawnSync } from "node:child_process";
 import { closeSync, existsSync, openSync, readdirSync } from "node:fs";
-import { mkdir, readFile, rm, stat, unlink, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, rm, stat, unlink, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 
 function usage(message) {
   if (message) console.error(`error: ${message}`);
-  console.error("usage: validate_cp.mjs INPUT.cp [--out-dir DIR] [--jar ORIEDITA.jar] [--java COMMAND] [--force]");
+  console.error("usage: validate_cp.mjs INPUT.cp [--out-dir DIR] [--jar ORIEDITA.jar] [--java COMMAND] [--isolated] [--force]");
   process.exit(2);
 }
 
@@ -18,6 +18,7 @@ function parseArgs(argv) {
   for (let index = 0; index < argv.length; index += 1) {
     const item = argv[index];
     if (item === "--force") options.force = true;
+    else if (item === "--isolated") options.isolated = true;
     else if (["--out-dir", "--jar", "--java"].includes(item)) {
       const value = argv[index + 1];
       if (!value) usage(`${item} requires a value`);
@@ -143,7 +144,7 @@ async function healthy(connection) {
   }
 }
 
-async function connectToOriedita({ jarFile, javaCommand, runtimeDirectory, logFile }) {
+async function connectToOriedita({ jarFile, javaCommand, runtimeDirectory, logFile, isolated }) {
   const connectionFile = path.join(runtimeDirectory, "connection.json");
   const existing = await readConnection(connectionFile);
   if (existing && await healthy(existing)) return { connection: existing, launched: false };
@@ -168,9 +169,10 @@ async function connectToOriedita({ jarFile, javaCommand, runtimeDirectory, logFi
   const deadline = Date.now() + 30_000;
   while (Date.now() < deadline) {
     const connection = await readConnection(connectionFile);
-    if (connection?.token === token && await healthy(connection)) return { connection, launched: true };
+    if (connection?.token === token && await healthy(connection)) return { connection, launched: true, child };
     await sleep(150);
   }
+  if (isolated) child.kill();
   throw new Error(`Oriedita did not become ready within 30 seconds; see ${logFile}`);
 }
 
@@ -189,6 +191,7 @@ const outputs = {
   fold: path.join(outDir, `${stem}.fold`),
   svg: path.join(outDir, `${stem}.svg`),
   foldedFigure: path.join(outDir, "folded-figure.png"),
+  foldedModel: path.join(outDir, "folded-model.json"),
 };
 
 if (!options.force) {
@@ -206,7 +209,9 @@ try {
 }
 
 const userSuffix = typeof process.getuid === "function" ? process.getuid() : "user";
-const runtimeDirectory = path.resolve(process.env.ORIEDITA_MCP_RUNTIME_DIR ?? path.join(os.tmpdir(), `oriedita-mcp-${userSuffix}`));
+const runtimeDirectory = options.isolated
+  ? await mkdtemp(path.join(os.tmpdir(), "oriedita-adapt-"))
+  : path.resolve(process.env.ORIEDITA_MCP_RUNTIME_DIR ?? path.join(os.tmpdir(), `oriedita-mcp-${userSuffix}`));
 const logFile = path.join(runtimeDirectory, "oriedita.log");
 const report = {
   success: false,
@@ -223,13 +228,16 @@ const report = {
   ],
 };
 
+let isolatedChild;
 try {
-  const { connection, launched } = await connectToOriedita({
+  const { connection, launched, child } = await connectToOriedita({
     jarFile,
     javaCommand: options.java,
     runtimeDirectory,
     logFile,
+    isolated: options.isolated,
   });
+  if (options.isolated) isolatedChild = child;
   report.oriedita.launchedByValidator = launched;
   const api = (endpoint, body) => request(connection, endpoint, body === undefined ? {} : {
     method: "POST",
@@ -273,6 +281,10 @@ try {
     }
     const foldedModel = await api("/folded-model");
     modelInspected = Boolean(foldedModel);
+    if (modelInspected) {
+      await writeFile(outputs.foldedModel, JSON.stringify(foldedModel));
+      report.evidence.foldedModel = outputs.foldedModel;
+    }
   }
   report.evidence.foldedFigurePng = foldedImage ? outputs.foldedFigure : null;
   report.oriedita.foldedModelReturned = modelInspected;
@@ -288,6 +300,8 @@ try {
 } catch (error) {
   report.error = error instanceof Error ? error.message : String(error);
 } finally {
+  if (isolatedChild) isolatedChild.kill();
+  if (options.isolated && report.success) await rm(runtimeDirectory, { recursive: true, force: true });
   await writeFile(outputs.report, `${JSON.stringify(report, null, 2)}\n`);
 }
 

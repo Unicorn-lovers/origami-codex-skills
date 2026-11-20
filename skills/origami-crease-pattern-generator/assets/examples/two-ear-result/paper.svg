@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="441" viewBox="0 0 660 441">
+<rect width="660" height="441" fill="#fafaf7"/>
+<g font-family="sans-serif" fill="#182b30">
+<text x="22" y="30" font-size="20" font-weight="bold">Paper landmarks</text>
+<polygon points="47.000,57.000 207.000,57.000 47.000,217.000" fill="#7cae99" fill-opacity=".14"/>
+<polygon points="207.000,57.000 367.000,217.000 207.000,377.000 47.000,217.000" fill="#7cae99" fill-opacity=".14"/>
+<polygon points="367.000,377.000 207.000,377.000 367.000,217.000" fill="#7cae99" fill-opacity=".14"/>
+<path d="M47.000 57.000 L95.000 57.000" stroke="#20353a" fill="none"/>
+<path d="M95.000 57.000 L143.000 57.000" stroke="#20353a" fill="none"/>
+<path d="M143.000 57.000 L207.000 57.000" stroke="#20353a" fill="none"/>
+<path d="M207.000 57.000 L367.000 57.000" stroke="#20353a" fill="none"/>
+<path d="M367.000 57.000 L367.000 217.000" stroke="#20353a" fill="none"/>
+<path d="M367.000 217.000 L367.000 377.000" stroke="#20353a" fill="none"/>
+<path d="M207.000 377.000 L367.000 377.000" stroke="#20353a" fill="none"/>
+<path d="M47.000 377.000 L207.000 377.000" stroke="#20353a" fill="none"/>
+<path d="M47.000 217.000 L47.000 377.000" stroke="#20353a" fill="none"/>
+<path d="M47.000 57.000 L47.000 105.000" stroke="#20353a" fill="none"/>
+<path d="M47.000 105.000 L47.000 129.000" stroke="#20353a" fill="none"/>
+<path d="M47.000 129.000 L47.000 217.000" stroke="#20353a" fill="none"/>
+<path d="M207.000 57.000 L367.000 217.000" stroke="#b44149" fill="none"/>
+<path d="M47.000 217.000 L207.000 377.000" stroke="#b44149" fill="none"/>
+<path d="M47.000 129.000 L143.000 57.000" stroke="#3469a3" fill="none"/>
+<path d="M47.000 105.000 L95.000 57.000" stroke="#b44149" fill="none"/>
+<text x="410" y="107" font-size="16">1. Head root</text>
+<text x="410" y="134" font-size="16">2. Body panel</text>
+<text x="410" y="161" font-size="16">3. Tail</text>
+<text x="410" y="188" font-size="16">4. Left ear</text>
+<text x="410" y="215" font-size="16">5. Right ear</text>
+<circle cx="127.00" cy="137.00" r="3.5" fill="#006857"/>
+<rect x="130.00" y="118.00" width="13" height="16" rx="3" fill="#005445"/>
+<text x="132.00" y="130.00" font-size="12" fill="white">1</text>
+<circle cx="207.00" cy="217.00" r="3.5" fill="#006857"/>
+<rect x="210.00" y="198.00" width="13" height="16" rx="3" fill="#005445"/>
+<text x="212.00" y="210.00" font-size="12" fill="white">2</text>
+<circle cx="367.00" cy="377.00" r="3.5" fill="#006857"/>
+<rect x="370.00" y="358.00" width="13" height="16" rx="3" fill="#005445"/>
+<text x="372.00" y="370.00" font-size="12" fill="white">3</text>
+<circle cx="47.00" cy="129.00" r="3.5" fill="#006857"/>
+<rect x="50.00" y="110.00" width="13" height="16" rx="3" fill="#005445"/>
+<text x="52.00" y="122.00" font-size="12" fill="white">4</text>
+<circle cx="47.00" cy="57.00" r="3.5" fill="#006857"/>
+<rect x="50.00" y="38.00" width="13" height="16" rx="3" fill="#005445"/>
+<text x="52.00" y="50.00" font-size="12" fill="white">5</text>
+<text x="22" y="423" font-size="12">Shaded areas show the original material reservations.</text>
+</g></svg>
