@@ -2,7 +2,7 @@
 
 折り紙の展開図を設計・検証するためのCodexスキルです。
 
-8×8のドット絵を渡すと、dotFoldSolverで展開図を探索できます。元絵と折り上がりの見える色が一致した候補は、山谷付きでOrieditaに取り込めます。[PNG・テキストからの使い方](skills/origami-crease-pattern-generator/references/pixel-art.md)
+8×8または16×16の2色ドット絵から、正方形の紙1枚で折れる展開図を探索できます。8×8はdotFoldSolverを使い、16×16は元の256マスを保って紙の境界と折り線を探索します。折り上がりの前景が元絵と一致すると、山谷付きの展開図をOrieditaに取り込めます。[PNG・テキストからの使い方](skills/origami-crease-pattern-generator/references/pixel-art.md)
 
 ## Skills
 

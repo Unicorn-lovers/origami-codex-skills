@@ -64,6 +64,22 @@ class DotFoldGeometryTest(unittest.TestCase):
         self.assertTrue(report["oddCoverageRegistration"]["exact"])
         self.assertEqual(report["maxLayers"], 1)
 
+    def test_sixteen_corner_and_projection(self):
+        fold = make_fold("00" * 225, [0, 1, 0, 0], size=16)
+        self.assertEqual(fold["edges_assignment"].count("B"), 64)
+        ids = fold["edges_vertices"][fold["edges_assignment"].index("U")]
+        self.assertEqual(
+            [fold["vertices_coords"][i] for i in ids], [[15, 16], [16, 15]]
+        )
+        report = projection(fold, "1" * 15 + "0" + "1" * 240)
+        self.assertEqual(report["paperArea"], 256)
+        self.assertEqual(report["footprintArea"], 255.5)
+        self.assertTrue(report["oddCoverageRegistration"]["exact"])
+        image = ElementTree.fromstring(crease_svg(fold))
+        self.assertEqual(image.get("viewBox"), "-.2 -.2 16.4 16.4")
+        with self.assertRaisesRegex(ValueError, "256"):
+            projection(fold, "1" * 64)
+
     def test_all_four_corner_indices_follow_source_screen_order(self):
         for i, edge in enumerate(CORNER_EDGES):
             with self.subTest(corner=i):

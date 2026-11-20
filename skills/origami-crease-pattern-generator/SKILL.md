@@ -1,6 +1,6 @@
 ---
 name: origami-crease-pattern-generator
-description: Design, edit, search, and validate editable origami crease patterns, including pixel-art origami from an 8×8 bitmap with dotFoldSolver. Use for one-off models and revisions, multi-candidate experiments, Oriedita validation, DEFOX folding sequences, or paper-thickness evaluation; do not use for decorative crease-pattern artwork or folding instructions without editable geometry.
+description: Design, edit, search, and validate editable origami crease patterns, including one-sheet pixel-art origami from 8×8 and 16×16 bitmaps. Use for one-off models and revisions, multi-candidate experiments, Oriedita validation, DEFOX folding sequences, or paper-thickness evaluation; do not use for decorative crease-pattern artwork or folding instructions without editable geometry.
 ---
 
 # 折り紙展開図ジェネレーター
@@ -17,7 +17,9 @@ Both modes use the same geometry, validation criteria, scripts, and final crease
 
 ## Plan the geometry
 
-When the subject is a specified pixel design (ドット絵), route it directly to [pixel-art origami](references/pixel-art.md). Run dotFoldSolver on the original bitmap, then check the visible paper colors against that same bitmap. Choose this route before ranking animal bases, including when the pixels depict an animal.
+When the subject is a specified pixel design (ドット絵), run `scripts/dotfold.py` on the original 8×8 or 16×16 bitmap. The 8×8 route uses dotFoldSolver. The 16×16 route searches corner and edge folds, then boundary walks and compatible crease tiles on the full grid. Compare the visible paper colors with the supplied pixels and report the search status. Use this route before ranking animal bases, including when the pixels depict an animal. See [pixel-art origami](references/pixel-art.md).
+
+For an opaque 16×16 PNG with two colors and no specified foreground, use the importer’s color choice. If it inferred the foreground from the border and the first search did not match, retry the original PNG once with the other RGB as `--foreground` in a fresh output directory when the remaining search budget allows. Honor any specified color roles, total time or candidate caps, and report which color produced the delivered result.
 
 - Preserve a user-supplied `.cp`, `.fold`, diagram, or exact construction unless the requested change requires new geometry.
 - For a parametric base or tessellation, derive coordinates from shared formulas, symmetry, ratios, and construction constraints.

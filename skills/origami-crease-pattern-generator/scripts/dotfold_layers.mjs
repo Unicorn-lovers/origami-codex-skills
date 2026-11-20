@@ -42,6 +42,7 @@ export function matchView(rings, foreground, pixels, back) {
   const inkArea = ink.reduce((n, ring) => n + area(ring), 0);
   if (!pixels.length || Math.abs(inkArea - pixels.length) > tolerance) return null;
   const x0 = Math.min(...pixels.map(p => p[0])), y0 = Math.min(...pixels.map(p => p[1]));
+  const target = new Set(pixels.map(([x, y]) => x + "," + y));
   for (let turns = 0; turns < 4; turns++) {
     const points = ink.flat().map(p => orient(p, back, turns));
     const dx = x0 - Math.min(...points.map(p => p[0])), dy = y0 - Math.min(...points.map(p => p[1]));
@@ -51,9 +52,16 @@ export function matchView(rings, foreground, pixels, back) {
     }));
     let overlap = 0;
     for (let i = 0; i < placed.length; i++) {
-      if (foreground[i]) for (const p of pixels) overlap += intersectionArea(placed[i], p);
+      if (!foreground[i]) continue;
+      const ring = placed[i], xs = ring.map(p => p[0]), ys = ring.map(p => p[1]);
+      const xmax = Math.ceil(Math.max(...xs)), ymax = Math.ceil(Math.max(...ys));
+      for (let y = Math.floor(Math.min(...ys)); y < ymax; y++) {
+        for (let x = Math.floor(Math.min(...xs)); x < xmax; x++) {
+          if (target.has(x + "," + y)) overlap += intersectionArea(ring, [x, y]);
+        }
+      }
     }
-    // Disjoint layer cells. Includes ink outside the 8x8 frame and partial pixels.
+    // Disjoint layer cells. Includes ink outside the target frame and partial pixels.
     const difference = Math.max(0, inkArea + pixels.length - 2 * overlap);
     if (difference < tolerance) return {placed, quarterTurns: turns, translation: [dx, dy], difference};
   }
@@ -73,7 +81,28 @@ function assignments(fold, orders) {
   });
 }
 
+function singleFace(candidate, pixels) {
+  // With zero hinges, the only stack everywhere in the sheet is face 0.
+  const ring = candidate.faces_vertices[0].map(v => candidate.vertices_coords[v]);
+  const view = matchView([ring], [true], pixels, false);
+  const evidence = {layerMethod: "single_face", states: 1};
+  if (!view) return {...evidence, status: "no_visible_match", searchMayBeTruncated: false};
+  return {...evidence, status: "exact", side: "front", inkOnBackOfSheet: false,
+    pixelDifferenceArea: view.difference, quarterTurns: view.quarterTurns, translation: view.translation,
+    graph: candidate, folded: {...candidate, frame_classes: ["foldedForm"], faceOrders: []},
+    cells: [{polygon: view.placed[0], ink: true, stack: [0]}]};
+}
+
 async function solve(source, candidate, target, limit) {
+  const bits = target.bits;
+  if (typeof bits !== "string" || ![64, 256].includes(bits.length) || /[^01]/.test(bits)) {
+    throw new Error("expected an 8×8 or 16×16 binary target");
+  }
+  const size = Math.sqrt(bits.length);
+  const pix = [...bits].flatMap((b, i) => b === "1" ? [[i % size, Math.floor(i / size)]] : []);
+  if (candidate.faces_vertices.length === 1 && candidate.edges_assignment.every(a => a === "B")) {
+    return singleFace(candidate, pix);
+  }
   globalThis.onmessage = null;
   let reply;
   globalThis.postMessage = message => { if (message.type === "end") reply = message; };
@@ -98,7 +127,6 @@ async function solve(source, candidate, target, limit) {
   const [status, counts] = request("solve", limit);
   if (status !== "success") return {status: "no_layer_state", stage: "solve"};
   const rings = c.CP.map(face => face.map(v => c.P[v]));
-  const pix = [...target.bits].flatMap((b, i) => b === "1" ? [[i % 8, Math.floor(i / 8)]] : []);
   const transparent = target.background === "transparent";
   const selection = counts.map(() => 0), tried = new Set();
   let states = 0, remaining = true;
@@ -116,7 +144,7 @@ async function solve(source, candidate, target, limit) {
         tried.add(key);
         const view = matchView(rings, ink, pix, back);
         if (!view) continue;
-        const graph = {file_spec: 1.1, file_creator: "dotFoldSolver and Flat-Folder",
+        const graph = {file_spec: 1.1, file_creator: size === 16 ? "16x16 pixel crease search and Flat-Folder" : "dotFoldSolver and Flat-Folder",
           vertices_coords: f.V, edges_vertices: f.EV, edges_assignment: assignments(f, orders), faces_vertices: f.FV};
         return {status: "exact", states, side: back ? "back" : "front", inkOnBackOfSheet,
           pixelDifferenceArea: view.difference, quarterTurns: view.quarterTurns, translation: view.translation,

@@ -50,15 +50,15 @@ function tabFold(assignment) {
   };
 }
 
-function solve(cwd, fold, pixels, background = "#ffffff") {
+function solve(cwd, fold, pixels, background = "#ffffff", size = 8) {
   const file = path.join(cwd, "source.fold");
   const target = path.join(cwd, "target.json");
   const result = path.join(cwd, "result.json");
-  const grid = Array(64).fill("0");
-  for (const [x, y] of pixels) grid[8 * y + x] = "1";
+  const grid = Array(size * size).fill("0");
+  for (const [x, y] of pixels) grid[size * y + x] = "1";
   writeFileSync(file, JSON.stringify(fold));
   writeFileSync(target, JSON.stringify({bits: grid.join(""), background}));
-  execFileSync(process.execPath, [script, flatFolder, file, target, result, "4"]);
+  execFileSync(process.execPath, [script, flatFolder || cwd, file, target, result, "4"]);
   return JSON.parse(readFileSync(result, "utf8"));
 }
 
@@ -94,8 +94,34 @@ test("mountain and valley expose opposite handed images and round-trip as assign
       assert.equal(faceAbove === tab, mv === "V");
       assert.equal(solve(cwd, result.graph, visible).status, "exact");
       assert.equal(solve(cwd, result.graph, other).status, "no_visible_match");
+      // Exercise the lower-right quadrant of a 16-cell target with real
+      // overlapping faces, including its row stride and visual handedness.
+      const shifted = visible.map(([x, y]) => [x + 13, y + 14]);
+      const larger = solve(cwd, result.graph, shifted, "#ffffff", 16);
+      assert.equal(larger.status, "exact");
+      assert.equal(larger.side, side);
+      assert.equal(larger.pixelDifferenceArea, 0);
       // The tab occupies one of the background cells, so this same image
       // cannot be the silhouette of paper against a transparent background.
       assert.equal(solve(cwd, result.graph, visible, "transparent").status, "no_visible_match");
     }
   });
+
+test("the uncreased 16×16 sheet has precisely one layer order", t => {
+  const cwd = mkdtempSync(path.join(tmpdir(), "dotfold-single-"));
+  t.after(() => rmSync(cwd, {recursive: true, force: true}));
+  const sheet = {
+    vertices_coords: [[0, 0], [16, 0], [16, 16], [0, 16]],
+    faces_vertices: [[0, 1, 2, 3]],
+    edges_vertices: [[0, 1], [1, 2], [2, 3], [3, 0]],
+    edges_assignment: Array(4).fill("B"),
+  };
+  const mask = Array.from({length: 256}, (_, i) => [i % 16, Math.floor(i / 16)]);
+  const result = solve(cwd, sheet, mask, "transparent", 16);
+  assert.equal(result.status, "exact");
+  assert.equal(result.layerMethod, "single_face");
+  assert.equal(result.pixelDifferenceArea, 0);
+  assert.deepEqual(result.cells[0].stack, [0]);
+  assert.deepEqual(result.folded.faceOrders, []);
+  assert.equal(solve(cwd, sheet, mask.slice(1), "transparent", 16).status, "no_visible_match");
+});
