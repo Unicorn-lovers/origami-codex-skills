@@ -20,6 +20,8 @@ Name the intended pose, strongest viewing angle, level of realism or stylization
 
 Connect the required tips through a tree of meaningful body junctions. Assign relative path lengths before choosing paper coordinates. Reserve rivers or bands between crowded parts when their layers must pass without trapping one another.
 
+Before constructing that tree from scratch, read [base-library.md](base-library.md), express the brief as base requirements, and rank the bundled bases. Map every essential feature to each shortlisted base and compare the local transformations needed. Continue with a new flap tree only when the candidates leave essential blockers or require a global topology rewrite.
+
 Check every pair of leaf tips: the distance on paper must be at least the scaled path length through the tree. Record active or nearly active contacts; they explain the geometry of the base. Prefer analytic symmetry and contact equations over hand-tuned coordinates.
 
 Before adopting one allocation, compare at least two materially different candidates when the design is still uncertain. Account for unused regions, river contributions to effective length, edge versus internal flaps, layer thickness, surface width, color-change boundaries, and whether asymmetric allocation can support a symmetric finished form more efficiently.

@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "scoring_scope": "Heuristic screening for base adaptation. Inspect geometry and revalidate every modification.",
+  "bases": [
+    {
+      "id": "bird-base",
+      "name": "Bird base",
+      "cp": "bird-base.cp",
+      "flaps": [
+        {"id": "axis-a", "length": "long", "width": "narrow", "pair": "axis"},
+        {"id": "axis-b", "length": "long", "width": "narrow", "pair": "axis"},
+        {"id": "side-a", "length": "medium", "width": "broad", "pair": "sides"},
+        {"id": "side-b", "length": "medium", "width": "broad", "pair": "sides"}
+      ],
+      "broad_surfaces": 2,
+      "symmetry": ["bilateral", "rotational"],
+      "volume_bias": ["flat", "3d"],
+      "affordances": ["opposed long tips", "paired side panels", "petal-derived narrowing", "head-tail separation"],
+      "tradeoffs": ["dense center", "long tips compete with side-panel width"],
+      "common_transformations": ["stretch one tip", "split a tip", "border graft", "hybridize one quadrant"],
+      "validation": {"level": 3, "line_count": 24, "violation_count": 0, "calculation_completed": true, "folded_model_returned": true}
+    },
+    {
+      "id": "frog-base",
+      "name": "Frog base",
+      "cp": "frog-base.cp",
+      "flaps": [
+        {"id": "limb-a1", "length": "long", "width": "narrow", "pair": "limbs-a"},
+        {"id": "limb-a2", "length": "long", "width": "narrow", "pair": "limbs-a"},
+        {"id": "limb-b1", "length": "long", "width": "narrow", "pair": "limbs-b"},
+        {"id": "limb-b2", "length": "long", "width": "narrow", "pair": "limbs-b"},
+        {"id": "short-tip", "length": "medium", "width": "medium"}
+      ],
+      "broad_surfaces": 1,
+      "symmetry": ["bilateral", "rotational"],
+      "volume_bias": ["3d", "flat"],
+      "affordances": ["four limb-like tips", "radial appendage layout", "paired limb separation"],
+      "tradeoffs": ["high center density", "limited broad body surface", "many active creases"],
+      "common_transformations": ["shorten a limb pair", "split the short tip", "add a body river", "hybridize one quadrant"],
+      "validation": {"level": 3, "line_count": 50, "violation_count": 0, "calculation_completed": true, "folded_model_returned": true}
+    },
+    {
+      "id": "fish-base",
+      "name": "Fish base",
+      "cp": "fish-base.cp",
+      "flaps": [
+        {"id": "axis-a", "length": "long", "width": "narrow", "pair": "axis"},
+        {"id": "axis-b", "length": "long", "width": "narrow", "pair": "axis"},
+        {"id": "side-a", "length": "medium", "width": "broad", "pair": "sides"},
+        {"id": "side-b", "length": "medium", "width": "broad", "pair": "sides"}
+      ],
+      "broad_surfaces": 1,
+      "symmetry": ["bilateral", "diagonal"],
+      "volume_bias": ["flat", "3d"],
+      "affordances": ["two opposed rabbit-ear tips", "strong body axis", "open side regions"],
+      "tradeoffs": ["few independent appendages", "diagonal allocation constrains body width"],
+      "common_transformations": ["split a rabbit ear", "stretch the body axis", "border graft", "combine with a half bird base"],
+      "validation": {"level": 3, "line_count": 14, "violation_count": 0, "calculation_completed": true, "folded_model_returned": true}
+    },
+    {
+      "id": "preliminary-base",
+      "name": "Preliminary base",
+      "cp": "preliminary-base.cp",
+      "flaps": [
+        {"id": "flap-a1", "length": "medium", "width": "medium", "pair": "flaps-a"},
+        {"id": "flap-a2", "length": "medium", "width": "medium", "pair": "flaps-a"},
+        {"id": "flap-b1", "length": "medium", "width": "medium", "pair": "flaps-b"},
+        {"id": "flap-b2", "length": "medium", "width": "medium", "pair": "flaps-b"}
+      ],
+      "broad_surfaces": 2,
+      "symmetry": ["bilateral", "rotational"],
+      "volume_bias": ["flat", "3d"],
+      "affordances": ["neutral four-flap stack", "simple collapse", "foundation for petal and squash folds"],
+      "tradeoffs": ["no long specialized tips", "later transformations determine most capability"],
+      "common_transformations": ["petal fold", "squash a flap", "split a flap", "convert to bird or frog family"],
+      "validation": {"level": 3, "line_count": 14, "violation_count": 0, "calculation_completed": true, "folded_model_returned": true}
+    },
+    {
+      "id": "waterbomb-base",
+      "name": "Waterbomb base",
+      "cp": "waterbomb-base.cp",
+      "flaps": [
+        {"id": "panel-a1", "length": "medium", "width": "broad", "pair": "panels-a"},
+        {"id": "panel-a2", "length": "medium", "width": "broad", "pair": "panels-a"},
+        {"id": "panel-b1", "length": "medium", "width": "broad", "pair": "panels-b"},
+        {"id": "panel-b2", "length": "medium", "width": "broad", "pair": "panels-b"}
+      ],
+      "broad_surfaces": 2,
+      "symmetry": ["bilateral", "rotational"],
+      "volume_bias": ["3d", "flat"],
+      "affordances": ["radial triangular panels", "inflatable volume", "paired pockets"],
+      "tradeoffs": ["weak long-axis differentiation", "appendage separation needs extra structure"],
+      "common_transformations": ["open a pocket", "split a corner", "add radial pleats", "stretch one axis"],
+      "validation": {"level": 3, "line_count": 14, "violation_count": 0, "calculation_completed": true, "folded_model_returned": true}
+    },
+    {
+      "id": "blintz-base",
+      "name": "Blintz base",
+      "cp": "blintz-base.cp",
+      "flaps": [
+        {"id": "inward-a1", "length": "medium", "width": "medium", "pair": "inward-a"},
+        {"id": "inward-a2", "length": "medium", "width": "medium", "pair": "inward-a"},
+        {"id": "inward-b1", "length": "medium", "width": "medium", "pair": "inward-b"},
+        {"id": "inward-b2", "length": "medium", "width": "medium", "pair": "inward-b"}
+      ],
+      "broad_surfaces": 1,
+      "symmetry": ["bilateral", "rotational"],
+      "volume_bias": ["flat", "3d"],
+      "affordances": ["four inward corner regions", "distributed short features", "secondary square for another base"],
+      "tradeoffs": ["reduced effective sheet size", "layer count rises before subject shaping"],
+      "common_transformations": ["apply a second base to the inner square", "release one corner", "split an inward flap", "asymmetric blintz"],
+      "validation": {"level": 3, "line_count": 12, "violation_count": 0, "calculation_completed": true, "folded_model_returned": true}
+    }
+  ]
+}

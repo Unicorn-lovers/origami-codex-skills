@@ -1,0 +1,20 @@
+{
+  "validated_at": "2026-11-20",
+  "validator": "Oriedita local control bridge",
+  "oriedita_version": "1.1.4-SNAPSHOT",
+  "claim_level": 3,
+  "preview": "validation-preview.png",
+  "limitations": [
+    "Validation establishes CP format, local flat-foldability, and a completed calculated flat-folded state.",
+    "It does not establish a subject match, practical folding sequence, positive-thickness feasibility, or a real-paper trial.",
+    "Any change to a bundled CP requires a new validation run."
+  ],
+  "bases": {
+    "bird-base": {"line_count": 24, "violation_count": 0, "calculation_started": true, "calculation_completed": true, "folded_figure_returned": true, "folded_model_returned": true},
+    "frog-base": {"line_count": 50, "violation_count": 0, "calculation_started": true, "calculation_completed": true, "folded_figure_returned": true, "folded_model_returned": true},
+    "fish-base": {"line_count": 14, "violation_count": 0, "calculation_started": true, "calculation_completed": true, "folded_figure_returned": true, "folded_model_returned": true},
+    "preliminary-base": {"line_count": 14, "violation_count": 0, "calculation_started": true, "calculation_completed": true, "folded_figure_returned": true, "folded_model_returned": true},
+    "waterbomb-base": {"line_count": 14, "violation_count": 0, "calculation_started": true, "calculation_completed": true, "folded_figure_returned": true, "folded_model_returned": true},
+    "blintz-base": {"line_count": 12, "violation_count": 0, "calculation_started": true, "calculation_completed": true, "folded_figure_returned": true, "folded_model_returned": true}
+  }
+}

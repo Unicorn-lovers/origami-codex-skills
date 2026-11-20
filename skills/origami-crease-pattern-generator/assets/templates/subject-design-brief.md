@@ -17,9 +17,9 @@ Replace every bracketed placeholder before using this file.
 
 ## Required features
 
-| Feature | Count | Relative length | Connection | Must reach silhouette? | Priority |
-|---|---:|---:|---|---|---|
-| [feature] | [n] | [ratio] | [junction] | [yes/no] | [essential/supporting] |
+| Feature | Count | Relative length | Required width | Connection or local parent | Must reach silhouette? | Priority |
+|---|---:|---:|---:|---|---|---|
+| [feature] | [n] | [ratio] | [broad/medium/narrow] | [junction, or feature it can be split from] | [yes/no] | [essential/supporting] |
 
 ## Surface requirements
 
@@ -37,10 +37,10 @@ Replace every bracketed placeholder before using this file.
 
 ## Allocation candidates
 
-| Candidate | Entry route or base | Paper use | Width and thickness risks | Surface/color benefits | Decision |
+| Candidate | Base and named-feature mapping | Required transformations | Paper use | Width and thickness risks | Decision |
 |---|---|---|---|---|---|
-| [A] | [route] | [unused areas and river contributions] | [risks] | [benefits] | [keep/reject/unknown] |
-| [B] | [route] | [unused areas and river contributions] | [risks] | [benefits] | [keep/reject/unknown] |
+| [A] | [base or scratch route; feature → flap/surface] | [shorten/split/graft/river/hybridize] | [unused areas and river contributions] | [risks] | [keep/reject/unknown] |
+| [B] | [base or scratch route; feature → flap/surface] | [shorten/split/graft/river/hybridize] | [unused areas and river contributions] | [risks] | [keep/reject/unknown] |
 
 ## Pose and silhouette
 

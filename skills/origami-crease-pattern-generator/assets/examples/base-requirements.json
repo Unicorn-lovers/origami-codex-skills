@@ -1,0 +1,17 @@
+{
+  "subject": "generic horned quadruped",
+  "features": [
+    {"name": "legs", "count": 4, "length": "long", "width": "narrow", "priority": "essential", "paired": true},
+    {"name": "head", "count": 1, "length": "medium", "width": "medium", "priority": "essential"},
+    {"name": "horns", "count": 2, "length": "medium", "width": "narrow", "priority": "supporting", "paired": true, "derive_from": "head"},
+    {"name": "ears", "count": 2, "length": "short", "width": "narrow", "priority": "supporting", "paired": true, "derive_from": "head"},
+    {"name": "tail", "count": 1, "length": "long", "width": "broad", "priority": "optional"}
+  ],
+  "surfaces": [
+    {"name": "torso", "count": 1, "size": "broad", "priority": "essential"}
+  ],
+  "preferences": {
+    "symmetry": "bilateral",
+    "volume": "3d"
+  }
+}
