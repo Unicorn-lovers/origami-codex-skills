@@ -19,9 +19,10 @@ Both modes use the same geometry, validation criteria, scripts, and final crease
 
 - Preserve a user-supplied `.cp`, `.fold`, diagram, or exact construction unless the requested change requires new geometry.
 - For a parametric base or tessellation, derive coordinates from shared formulas, symmetry, ratios, and construction constraints.
-- For a subject requested only by name, read [references/novel-subject-workflow.md](references/novel-subject-workflow.md). Plan named features and a flap tree before drawing creases.
+- For a subject requested only by name, read [references/base-library.md](references/base-library.md) and [references/novel-subject-workflow.md](references/novel-subject-workflow.md). Plan named features, rank the bundled bases, and compare adaptation plans before drawing a new flap tree.
+- Prefer a verified base adaptation when it covers every essential tip and surface with local changes. Design from scratch when all candidates have essential blockers or require a global topology rewrite.
 - For an original animal or creature, also read [references/animal-design-and-iteration.md](references/animal-design-and-iteration.md) when subject analysis, allocation alternatives, ratio choice, material choice, or physical iteration matters. Use those methods as heuristics, never as permission to copy reference geometry.
-- Use [assets/examples/validated-crane-base.cp](assets/examples/validated-crane-base.cp) only for a relevant bird-like base. Any change invalidates its previous evidence and requires revalidation.
+- Treat every change to a bundled base or [assets/examples/validated-crane-base.cp](assets/examples/validated-crane-base.cp) as a new candidate. Its previous validation does not transfer to the derivative.
 
 If the user supplies a designer, article set, blog, or body of work as a reference, read [references/research-and-provenance.md](references/research-and-provenance.md). Record what was reviewed, extract reusable principles, and do not copy another creator's crease pattern as the new model. For a large image set, also read [references/research-image-index.md](references/research-image-index.md) and use `scripts/make_contact_sheet.py`.
 
