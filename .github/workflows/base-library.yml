@@ -14,4 +14,6 @@ jobs:
       - run: python3 scripts/rank_bases.py --self-test
       - run: python3 scripts/base_regions.py --check
       - run: python3 -m unittest discover -s tests
+      - run: node --test tests/dotfold_layers.test.mjs
+      - run: python3 scripts/dotfold.py assets/examples/pixel-art/letter-l.txt --out-dir "$RUNNER_TEMP/pixel-letter"
       - run: python3 scripts/adapt_base.py assets/examples/two-ear-study.json --geometry-only --out-dir "$RUNNER_TEMP/two-ears"

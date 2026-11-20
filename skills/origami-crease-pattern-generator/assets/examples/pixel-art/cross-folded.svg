@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="384" height="384" viewBox="0 0 8 8">
+<rect width="8" height="8" fill="#fff8e7"/>
+<polygon points="3,8 5,8 5,5 8,5 8,3 5,3 5,0 3,0 3,3 0,3 0,5 3,5" fill="#126871" shape-rendering="crispEdges"/>
+<polygon points="5,8 8,5 5,5" fill="#fff8e7" shape-rendering="crispEdges"/>
+<polygon points="3,8 3,5 0,5" fill="#fff8e7" shape-rendering="crispEdges"/>
+<polygon points="0,3 3,3 3,0" fill="#fff8e7" shape-rendering="crispEdges"/>
+<polygon points="5,3 8,3 5,0" fill="#fff8e7" shape-rendering="crispEdges"/>
+</svg>
