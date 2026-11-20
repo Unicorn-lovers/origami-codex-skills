@@ -10,7 +10,9 @@
 
 動物・生物の創作では、題材の特徴抽出、複数の領域配置案、比率の決め方、紙と構造の相互作用、実紙試作、再現性までを扱います。
 
-題材名だけから設計する場合は、検証済みのBird、Frog、Fish、Preliminary、Waterbomb、Blintz各基本形を先に比較し、局所的な改造で済む候補を優先します。必要なパーツを満たす基本形がない場合だけ、新しいフラップツリーから設計します。
+題材名から設計するときは、鶴・カエル・魚・正方・風船・座布団・凧・風車の8基本形を比較し、頭や脚、尾に使う紙の位置と重なりを調べます。候補を選ぶと、角を開く、向きを変える、二つの先端に分けるといった操作を展開図に反映し、Orieditaで折り上がりを検証できます。
+
+座布団の基本形から二つの耳と尾を作る[設計例](skills/origami-crease-pattern-generator/assets/examples/two-ear-study.json)、[改造手順](skills/origami-crease-pattern-generator/references/base-adaptation.md)、[各基本形の折り方](skills/origami-crease-pattern-generator/references/base-fold-sequences.md)を収録しています。
 
 通常は1件の展開図を扱うStandardモードを使います。次の要求がある場合だけ、同じスキル内のProductionモードへ進みます。
 

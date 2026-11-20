@@ -1,7 +1,42 @@
 {
   "schema_version": 1,
+  "regions": "regions.json",
   "scoring_scope": "Heuristic screening for base adaptation. Inspect geometry and revalidate every modification.",
   "bases": [
+    {
+      "id": "kite-base",
+      "name": "Kite base",
+      "cp": "kite-base.cp",
+      "flaps": [
+        {"id": "nose", "length": "long", "width": "narrow"},
+        {"id": "tail", "length": "medium", "width": "broad"}
+      ],
+      "broad_surfaces": 1,
+      "symmetry": ["bilateral", "diagonal"],
+      "volume_bias": ["flat"],
+      "affordances": ["acute nose", "wide rear panel", "long diagonal centerline"],
+      "tradeoffs": ["few independent tips", "two side layers meet along the axis"],
+      "common_transformations": ["shorten the acute tip", "bend the rear panel", "redirect one tip"],
+      "validation": {"level": 3, "line_count": 8, "violation_count": 0, "calculation_completed": true, "folded_model_returned": true}
+    },
+    {
+      "id": "windmill-base",
+      "name": "Windmill base",
+      "cp": "windmill-base.cp",
+      "flaps": [
+        {"id": "blade-a1", "length": "medium", "width": "medium", "pair": "opposed-a"},
+        {"id": "blade-a2", "length": "medium", "width": "medium", "pair": "opposed-a"},
+        {"id": "blade-b1", "length": "medium", "width": "medium", "pair": "opposed-b"},
+        {"id": "blade-b2", "length": "medium", "width": "medium", "pair": "opposed-b"}
+      ],
+      "broad_surfaces": 1,
+      "symmetry": ["rotational"],
+      "volume_bias": ["flat"],
+      "affordances": ["four accessible blades", "square central hub", "quarter-turn repetition"],
+      "tradeoffs": ["blade direction has a handedness", "tips compete for room around the hub"],
+      "common_transformations": ["shorten a blade", "redirect a blade", "work an opposite pair"],
+      "validation": {"level": 3, "line_count": 20, "violation_count": 0, "calculation_completed": true, "folded_model_returned": true}
+    },
     {
       "id": "bird-base",
       "name": "Bird base",

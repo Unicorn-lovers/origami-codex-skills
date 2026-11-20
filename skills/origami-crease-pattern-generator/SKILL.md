@@ -21,6 +21,7 @@ Both modes use the same geometry, validation criteria, scripts, and final crease
 - For a parametric base or tessellation, derive coordinates from shared formulas, symmetry, ratios, and construction constraints.
 - For a subject requested only by name, read [references/base-library.md](references/base-library.md) and [references/novel-subject-workflow.md](references/novel-subject-workflow.md). Plan named features, rank the bundled bases, and compare adaptation plans before drawing a new flap tree.
 - Prefer a verified base adaptation when it covers every essential tip and surface with local changes. Design from scratch when all candidates have essential blockers or require a global topology rewrite.
+- For a selected base, use [the adaptation workflow](references/base-adaptation.md) to turn the feature assignments into an edited CP and labelled paper/folded views. Consult [base folding sequences](references/base-fold-sequences.md) for the original collapse and its landmark checks.
 - For an original animal or creature, also read [references/animal-design-and-iteration.md](references/animal-design-and-iteration.md) when subject analysis, allocation alternatives, ratio choice, material choice, or physical iteration matters. Use those methods as heuristics, never as permission to copy reference geometry.
 - Treat every change to a bundled base or [assets/examples/validated-crane-base.cp](assets/examples/validated-crane-base.cp) as a new candidate. Its previous validation does not transfer to the derivative.
 

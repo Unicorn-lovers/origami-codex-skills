@@ -15,7 +15,7 @@ Do not treat a base name as a subject category. A bird base is a topology with p
 
 ## Bundled bases
 
-The library in `assets/bases/` contains six generated and Oriedita-validated CPs:
+The library in `assets/bases/` contains eight generated and Oriedita-validated CPs:
 
 | Base | Useful starting structure | Common cost |
 |---|---|---|
@@ -25,6 +25,8 @@ The library in `assets/bases/` contains six generated and Oriedita-validated CPs
 | Preliminary | neutral four-flap stack | most useful capability still requires a transformation |
 | Waterbomb | radial triangular panels and volume | weak long-axis differentiation |
 | Blintz | four inward corner regions and an inner square | smaller effective sheet and early layer buildup |
+| Kite | long pointed nose and a broad rear panel on a diagonal axis | few independent appendages |
+| Windmill | four outward blades around a square hub | blade direction has a handedness |
 
 `assets/bases/catalog.json` records each individual flap's heuristic length, width, paired relation, affordances, tradeoffs, common transformations, and the validation level. These profiles are screening descriptors, not geometric proof. Inspect `assets/bases/validation-preview.png` for a quick view of the bundled CPs and Oriedita folded-figure results; the preview is validation evidence, not a physical-fold guarantee.
 
@@ -48,9 +50,13 @@ Each feature needs:
 
 `derive_from` is a strict shared-region instruction: the child will not receive an independent flap. Use it only for one local step, such as ears split from a broad head flap. A child cannot be longer or broader than its parent, and multiple children must each be narrower than the parent region. The result records `source_flap_ids`, but the ranker still cannot prove that a proposed split has enough paper; inspect the geometry. Do not use derivation to excuse a new global branch or a chain of derived features. Broad face, torso, shell, or wing regions belong in `surfaces`, not as extra flaps. Preferences may name `bilateral`, `rotational`, or `diagonal` symmetry and `flat` or `3d` volume.
 
-The ranker assigns every requirement to a concrete flap at most once. A longer or broader flap can cover a smaller requirement with an adaptation cost; a short or narrow flap cannot satisfy a longer or broader request. It reports derived details, unmatched features, essential blockers, unused flaps, likely transformations, and catalog tradeoffs. Scores may be negative when the mismatch is severe. Broad-surface counts are heuristic regions rather than exclusive paper masks, so verify that a claimed surface does not conflict with the assigned flaps. A high score is a shortlist signal, not permission to adopt the base automatically.
+The ranker assigns each independent flap at most once. A longer or broader flap can cover a smaller requirement with an adaptation cost. It reports derived details, unmatched features, essential blockers, unused flaps, likely transformations, and catalog tradeoffs. Scores may be negative when the mismatch is severe.
+
+For the bundled bases, copy a candidate's `suggested_assignments` into the adaptation plan. Each entry identifies a reserved flap or surface in [regions.json](../assets/bases/regions.json). For a fixed flap assignment the ranker chooses surface IDs that minimize the total area of pairwise overlap, then lists each positive-area intersection in `region_conflicts`. Its `area_fraction` is relative to the whole square. A shared edge consumes zero common area. Review the declared tip, root and polygons on the unfolded paper and adjust the allocation wherever an intersection matters. Derived children continue to reference their parent's paper through `source_flap_ids` until the geometry defines the split. Custom catalogs may omit the top-level `regions` file for count-only screening.
 
 ## Compare adaptation plans
+
+For the chosen mapping, follow [the adaptation workflow](base-adaptation.md). Use the [base folding sequences](base-fold-sequences.md) to locate its original corners and layers.
 
 For each shortlisted base, record:
 

@@ -1,0 +1,17 @@
+name: Origami base checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  geometry:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: skills/origami-crease-pattern-generator
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/generate_base_library.py --check
+      - run: python3 scripts/rank_bases.py --self-test
+      - run: python3 scripts/base_regions.py --check
+      - run: python3 -m unittest discover -s tests
+      - run: python3 scripts/adapt_base.py assets/examples/two-ear-study.json --geometry-only --out-dir "$RUNNER_TEMP/two-ears"

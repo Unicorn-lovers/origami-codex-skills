@@ -5,9 +5,12 @@ from __future__ import annotations
 
 import argparse
 from functools import lru_cache
+from itertools import combinations
 import json
 from pathlib import Path
 from typing import Any
+
+from base_regions import conflicts, overlap_polygon, signed_area
 
 
 LENGTHS = ("long", "medium", "short")
@@ -137,6 +140,11 @@ def validate_catalog(data: dict[str, Any], catalog_path: Path) -> list[dict[str,
     bases = data.get("bases")
     if not isinstance(bases, list) or not bases:
         raise ValueError("catalog bases must be a non-empty array")
+    region_maps = None
+    if "regions" in data:
+        if not isinstance(data["regions"], str):
+            raise ValueError("catalog regions must be a JSON file name")
+        region_maps = load_json(catalog_path.parent / data["regions"])
     seen = set()
     for index, base in enumerate(bases):
         if not isinstance(base, dict):
@@ -163,6 +171,13 @@ def validate_catalog(data: dict[str, Any], catalog_path: Path) -> list[dict[str,
         cp_path = catalog_path.parent / str(base.get("cp", ""))
         if not cp_path.is_file():
             raise ValueError(f"catalog {base_id} CP does not exist: {cp_path}")
+        if region_maps is not None:
+            mapped = region_maps.get(base_id)
+            if (not isinstance(mapped, dict) or set(mapped.get("flaps", {})) != flap_ids
+                    or len(mapped.get("surfaces", {})) != base.get("broad_surfaces", 0)):
+                raise ValueError(f"catalog {base_id}: region IDs or surface count do not match")
+    if region_maps is not None:
+        return [{**base, "_region_map": region_maps[base["id"]]} for base in bases]
     return bases
 
 
@@ -215,6 +230,46 @@ def allocate_profiles(features: list[dict[str, Any]], flaps: list[dict[str, Any]
     mapped = [{**unit, "flap_index": flap_index} for unit, flap_index in zip(units, assignment)]
     used = {item["flap_index"] for item in mapped if item["flap_index"] >= 0}
     return cost, mapped, used
+
+
+def map_reservations(region_map, features, surfaces):
+    assignments = {}
+
+    def reserve(name, region_id):
+        label = name
+        index = 1
+        while label in assignments:
+            index += 1
+            label = f"{name} [{index}]"
+        assignments[label] = region_id
+
+    for feature in features:
+        for flap in feature["assigned"]:
+            reserve(feature["name"], flap["id"])
+
+    # Surface slots are interchangeable in this schema. Among sets of the required
+    # size, minimize pairwise overlap with reserved flaps and other selected faces.
+    available = region_map["surfaces"]
+    count = sum(s["assigned"] for s in surfaces)
+    flap_polygons = [region_map["flaps"][key]["polygon"] for key in assignments.values()]
+
+    def overlap_area(a, b):
+        return abs(signed_area(overlap_polygon(a, b)))
+
+    flap_cost = {key: sum(overlap_area(region["polygon"], p) for p in flap_polygons)
+                 for key, region in available.items()}
+
+    def cost(keys):
+        return sum(flap_cost[k] for k in keys) + sum(
+            overlap_area(available[a]["polygon"], available[b]["polygon"]) for a, b in combinations(keys, 2))
+
+    chosen = min(combinations(sorted(available), count), key=cost)
+    ordered = iter(sorted(chosen, key=lambda key: (flap_cost[key], key)))
+    for surface in surfaces:
+        surface["region_ids"] = [next(ordered) for _ in range(surface["assigned"])]
+        for key in surface["region_ids"]:
+            reserve(surface["name"], key)
+    return {"suggested_assignments": assignments, "region_conflicts": conflicts(region_map, assignments)}
 
 
 def rank_base(base: dict[str, Any], requirements: dict[str, Any], catalog_path: Path) -> dict[str, Any]:
@@ -316,6 +371,8 @@ def rank_base(base: dict[str, Any], requirements: dict[str, Any], catalog_path: 
         "score": round(score, 2),
         "matched_features": [results_by_name[feature["name"]] for feature in requirements["features"]],
         "surface_coverage": surface_results,
+        **(map_reservations(base["_region_map"], results_by_name.values(), surface_results)
+           if "_region_map" in base else {}),
         "remaining_flaps": [flap for index, flap in enumerate(flaps) if index not in used_flaps],
         "essential_blockers": essential_blockers,
         "unmatched": unmatched,
@@ -332,6 +389,7 @@ def build_result(requirements: dict[str, Any], catalog: list[dict[str, Any]], ca
     ranked.sort(key=lambda item: (
         sum(blocker["count"] for blocker in item["essential_blockers"]),
         -item["score"],
+        sum(conflict["area_fraction"] for conflict in item.get("region_conflicts", [])),
         item["id"],
     ))
     selected = ranked[:top]
@@ -341,7 +399,7 @@ def build_result(requirements: dict[str, Any], catalog: list[dict[str, Any]], ca
         "subject": requirements["subject"],
         "screening_only": True,
         "decision_rule": "Inspect the CP and named-feature mapping. Do not adopt a base solely from its score.",
-        "surface_assumption": "Broad-surface counts are heuristic regions, not exclusive paper masks. Check their overlap with assigned flaps manually.",
+        "surface_assumption": "Mapped candidates report positive overlap between reserved polygons in region_conflicts. With an unmapped catalog, review surface coverage manually.",
         "candidates": selected,
     }
 
