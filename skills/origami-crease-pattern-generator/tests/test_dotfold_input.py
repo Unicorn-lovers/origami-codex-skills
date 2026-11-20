@@ -35,6 +35,20 @@ class TextTarget(unittest.TestCase):
                     self.assertIsNone(result["foreground"])
                     self.assertIsNone(result["background"])
 
+    def test_sixteen_rows_and_bits_preserve_screen_orientation(self):
+        rows = ["0" * 15 + "1"] + ["0" * 16] * 14 + ["1" + "0" * 15]
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "input.txt"
+            for text in (
+                "".join(rows),
+                "\n".join(rows).translate(str.maketrans("01", ".#")),
+            ):
+                path.write_text(text)
+                self.assertEqual(load_target(path)["rows"], rows)
+                self.assertEqual(load_target(path, size=16)["bits"], "".join(rows))
+                with self.assertRaisesRegex(ValueError, "--size"):
+                    load_target(path, size=8)
+
     def test_invalid_text(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "input.txt"
@@ -94,14 +108,79 @@ class PngTarget(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "absent"):
             load_target(self.path, foreground="#000000")
 
+    def test_sixteen_opaque_foreground_uses_border_not_average_or_corner(self):
+        ink, paper = "#12a3bc", "#fc701a"
+        image = Image.new("RGB", (16, 16), paper)
+        image.paste(ink, (1, 1, 15, 15))
+        image.putpixel((0, 0), (18, 163, 188))
+        for scale in (1, 3):
+            with self.subTest(scale=scale):
+                image.resize((16 * scale, 16 * scale), Image.Resampling.NEAREST).save(
+                    self.path
+                )
+                result = load_target(self.path)
+                self.assertEqual(
+                    (result["foreground"], result["background"]), (ink, paper)
+                )
+                self.assertEqual(result["bits"].count("1"), 197)
+                override = load_target(self.path, foreground=paper)
+                self.assertEqual(
+                    override["bits"],
+                    result["bits"].translate(str.maketrans("01", "10")),
+                )
+
+    def test_sixteen_opaque_border_tie_uses_top_left_and_counts_corners_once(self):
+        # Two top corners + 28 noncorners tie the other 30 border cells.
+        image = Image.new("RGB", (16, 16), "#204060")
+        image.paste("#c08051", (0, 0, 16, 8))
+        for flip in (False, True):
+            picture = (
+                image.transpose(Image.Transpose.FLIP_TOP_BOTTOM) if flip else image
+            )
+            picture.save(self.path)
+            result = load_target(self.path)
+            self.assertEqual(result["background"], "#204060" if flip else "#c08051")
+            self.assertEqual(result["bits"], "0" * 128 + "1" * 128)
+        # Three corners of the top-left color with only 29 of 60 border cells.
+        # Counting corners twice would change the majority to a tie.
+        image.putpixel((15, 15), (192, 128, 81))
+        for x in (1, 2):
+            image.putpixel((x, 0), (32, 64, 96))
+        image.save(self.path)
+        self.assertEqual(load_target(self.path)["foreground"], "#c08051")
+
+    def test_sixteen_opaque_solid_color_uses_all_pixels(self):
+        Image.new("RGB", (16, 16), "#204060").save(self.path)
+        result = load_target(self.path)
+        self.assertEqual(result["foreground"], "#204060")
+        self.assertIsNone(result["background"])
+        self.assertEqual(result["bits"], "1" * 256)
+
     def test_transparent_pixels_with_different_hidden_colors(self):
         image = self.grid("#010304", (21, 44, 33, 0), scale=2)
         image.putpixel((0, 0), (3, 9, 14, 0))
         image.save(self.path)
-        result = load_target(self.path)
+        result = load_target(self.path, size=8)
         self.assertEqual(result["rows"], ROWS)
         self.assertEqual(result["foreground"], "#010304")
         self.assertEqual(result["background"], "transparent")
+
+    def test_native_sixteen_and_ambiguous_enlargement(self):
+        image = self.grid(scale=2)
+        image.save(self.path)
+        rows = load_target(self.path)["rows"]
+        self.assertEqual(
+            rows, ["".join(bit * 2 for bit in row) for row in ROWS for _ in range(2)]
+        )
+        self.assertEqual(load_target(self.path, size=8)["rows"], ROWS)
+        image.resize((32, 32), Image.Resampling.NEAREST).save(self.path)
+        self.assertEqual(load_target(self.path)["rows"], ROWS)
+        self.assertEqual(load_target(self.path, size=16)["rows"], rows)
+        image.putpixel((15, 15), (0, 0, 0, 255))
+        image.resize((48, 48), Image.Resampling.NEAREST).save(self.path)
+        self.assertEqual(load_target(self.path)["bits"], "".join(rows)[:-1] + "1")
+        with self.assertRaisesRegex(ValueError, "multiple colors"):
+            load_target(self.path, size=8)
 
     def test_palette_transparency(self):
         image = Image.new("P", (8, 8))
@@ -120,7 +199,7 @@ class PngTarget(unittest.TestCase):
         image.putpixel((0, 0), (0, 0, 0, 255))
         image.save(self.path)
         with self.assertRaisesRegex(ValueError, "row 1, column 1"):
-            load_target(self.path)
+            load_target(self.path, size=8)
         image = self.grid()
         image.putpixel((0, 0), (255, 255, 255, 120))
         image.save(self.path)

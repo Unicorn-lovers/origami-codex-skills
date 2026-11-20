@@ -10,10 +10,23 @@ jobs:
         working-directory: skills/origami-crease-pattern-generator
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 -m pip install Pillow
       - run: python3 scripts/generate_base_library.py --check
       - run: python3 scripts/rank_bases.py --self-test
       - run: python3 scripts/base_regions.py --check
+      - name: Prepare the pinned Flat-Folder source for CLI and layer tests
+        run: |
+          PYTHONPATH=scripts python3 - <<'PY' >> "$GITHUB_ENV"
+          import os
+          from pathlib import Path
+          from dotfold import flat_source
+          folder = flat_source(Path(os.environ["RUNNER_TEMP"]) / "dotfold")
+          print(f"FLAT_FOLDER_ROOT={folder}")
+          PY
       - run: python3 -m unittest discover -s tests
       - run: node --test tests/dotfold_layers.test.mjs
-      - run: python3 scripts/dotfold.py assets/examples/pixel-art/letter-l.txt --out-dir "$RUNNER_TEMP/pixel-letter"
+      - run: python3 scripts/dotfold.py assets/examples/pixel-art/letter-l.txt --flat-folder-dir "$FLAT_FOLDER_ROOT" --out-dir "$RUNNER_TEMP/pixel-letter"
       - run: python3 scripts/adapt_base.py assets/examples/two-ear-study.json --geometry-only --out-dir "$RUNNER_TEMP/two-ears"

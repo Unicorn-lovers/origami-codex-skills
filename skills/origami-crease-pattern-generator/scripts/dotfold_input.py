@@ -1,24 +1,27 @@
 #!/usr/bin/env python3
-"""Read the occupied cells of an 8×8 dotFoldSolver silhouette in screen order."""
+"""Read the occupied cells of an 8×8 or 16×16 DotFold silhouette in screen order."""
 
 from __future__ import annotations
 
 import argparse
 import json
 import re
+from collections import Counter
 from pathlib import Path
 
-SIZE = 8
+SIZES = (8, 16)
 
 
 def _text_rows(path: Path) -> list[str]:
     lines = path.read_text(encoding="utf-8-sig").splitlines()
-    if len(lines) == 1 and re.fullmatch(r"[01]{64}", lines[0]):
+    if len(lines) == 1:
         bits = lines[0]
-        return [bits[i : i + SIZE] for i in range(0, len(bits), SIZE)]
-    if len(lines) != SIZE or any(len(line) != SIZE for line in lines):
+        for size in SIZES:
+            if len(bits) == size * size and re.fullmatch(r"[01]+", bits):
+                return [bits[i : i + size] for i in range(0, len(bits), size)]
+    if len(lines) not in SIZES or any(len(line) != len(lines) for line in lines):
         raise ValueError(
-            "The text mask needs eight rows of eight cells, or one 64-digit binary string."
+            "The text mask needs an 8×8 or 16×16 square, or one 64- or 256-digit binary string."
         )
     symbols = set("".join(lines))
     if symbols <= {"0", "1"}:
@@ -30,7 +33,9 @@ def _text_rows(path: Path) -> list[str]:
     )
 
 
-def _png_rows(path: Path, foreground: str | None) -> tuple[list[str], str, str | None]:
+def _png_rows(
+    path: Path, foreground: str | None, size: int | None
+) -> tuple[list[str], str, str | None]:
     try:
         from PIL import Image, ImageChops
     except ImportError as exc:
@@ -63,14 +68,24 @@ def _png_rows(path: Path, foreground: str | None) -> tuple[list[str], str, str |
                         "Apply the saved orientation and export the upright pixel grid."
                     )
                 width, height = image.size
-                if width != height or width % SIZE:
+                # A native 16px image has one pixel per cell by default. For
+                # enlarged PNGs prefer the coarsest grid that fits exactly.
+                candidates = (
+                    (size,)
+                    if size is not None
+                    else ((width,) if width in SIZES else SIZES)
+                )
+                candidates = [
+                    n for n in candidates if width == height and width % n == 0
+                ]
+                if not candidates:
                     raise ValueError(
-                        f"The {width}×{height} PNG must be an 8×8 grid of equally sized square cells."
+                        f"The {width}×{height} PNG must be an 8×8 grid or a 16×16 grid of equally sized square cells."
                     )
                 rgba = image.convert("RGBA")
     except Image.DecompressionBombError as exc:
         raise ValueError(
-            "The PNG exceeds Pillow's image size limit. Export the original 8×8 grid."
+            "The PNG exceeds Pillow's image size limit. Export the original pixel grid."
         ) from exc
 
     # Hidden RGB values are irrelevant when alpha is zero. Make them identical
@@ -84,18 +99,23 @@ def _png_rows(path: Path, foreground: str | None) -> tuple[list[str], str, str |
     if any(level == 0 for _, level in levels):
         rgba.paste((0, 0, 0, 0), mask=ImageChops.invert(alpha))
 
-    side = width // SIZE
-    cells = []
-    for row in range(SIZE):
-        for col in range(SIZE):
+    for n in candidates:
+        side = width // n
+        cells = []
+        for index in range(n * n):
+            col, row = index % n, index // n
             x, y = col * side, row * side
             colors = rgba.crop((x, y, x + side, y + side)).getcolors(1)
             if colors is None:
-                raise ValueError(
-                    f"Cell at row {row + 1}, column {col + 1} contains multiple colors. Export a solid-cell grid."
-                )
+                if n == candidates[-1]:
+                    raise ValueError(
+                        f"Cell at row {row + 1}, column {col + 1} contains multiple colors. Export a solid-cell grid."
+                    )
+                break
             _, (r, g, b, a) = colors[0]
             cells.append(f"#{r:02x}{g:02x}{b:02x}" if a else "transparent")
+        else:
+            break
 
     palette = set(cells)
     if palette == {"transparent"}:
@@ -112,34 +132,55 @@ def _png_rows(path: Path, foreground: str | None) -> tuple[list[str], str, str |
             )
         foreground = solid
     elif foreground is None:
-        if not palette <= {"#000000", "#ffffff"}:
+        if palette <= {"#000000", "#ffffff"}:
+            foreground = "#000000"
+        elif n == 8:
             raise ValueError(
                 f"Choose the occupied color with --foreground from {', '.join(sorted(palette))}."
             )
-        foreground = "#000000"
+        elif len(palette) == 1:
+            foreground = cells[0]
+        else:
+            border = Counter(
+                color
+                for i, color in enumerate(cells)
+                if i // n in (0, n - 1) or i % n in (0, n - 1)
+            )
+            background = max(
+                palette, key=lambda color: (border[color], color == cells[0])
+            )
+            foreground = next(iter(palette - {background}))
     elif foreground not in palette:
         raise ValueError(
             f"The selected foreground {foreground} is absent from the PNG."
         )
 
     bits = "".join("1" if cell == foreground else "0" for cell in cells)
-    rows = [bits[i : i + SIZE] for i in range(0, len(bits), SIZE)]
+    rows = [bits[i : i + n] for i in range(0, len(bits), n)]
     return rows, foreground, next(iter(palette - {foreground}), None)
 
 
-def load_target(path: Path, *, foreground: str | None = None) -> dict:
+def load_target(
+    path: Path, *, foreground: str | None = None, size: int | None = None
+) -> dict:
     """Return binary rows, the solver argument and the source color mapping."""
     path = Path(path)
+    if size is not None and (type(size) is not int or size not in SIZES):
+        raise ValueError("--size must be 8 or 16")
     if path.suffix.lower() == ".png":
-        rows, foreground, background = _png_rows(path, foreground)
+        rows, foreground, background = _png_rows(path, foreground, size)
     elif path.suffix.lower() == ".txt":
         if foreground is not None:
             raise ValueError(
                 "--foreground applies only to PNG input. In text, 1 or # marks an occupied cell."
             )
         rows, background = _text_rows(path), None
+        if size is not None and len(rows) != size:
+            raise ValueError(
+                f"The text grid is {len(rows)}×{len(rows)}, but --size is {size}."
+            )
     else:
-        raise ValueError("Use a .png image or .txt mask for the 8×8 silhouette.")
+        raise ValueError("Use a .png image or .txt mask for the silhouette.")
     bits = "".join(rows)
     if "1" not in bits:
         raise ValueError("The target has no occupied cells.")
@@ -153,11 +194,16 @@ def load_target(path: Path, *, foreground: str | None = None) -> dict:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("target", type=Path, help="8×8 text mask or solid-cell PNG")
+    parser.add_argument(
+        "target", type=Path, help="8×8 or 16×16 text mask or solid-cell PNG"
+    )
     parser.add_argument("--foreground", help="occupied RGB color, e.g. '#204060'")
+    parser.add_argument(
+        "--size", type=int, choices=SIZES, help="explicit pixel grid size"
+    )
     args = parser.parse_args()
     try:
-        target = load_target(args.target, foreground=args.foreground)
+        target = load_target(args.target, foreground=args.foreground, size=args.size)
     except (OSError, ValueError) as exc:
         parser.exit(2, f"{exc}\n")
     print(json.dumps(target, indent=2))
