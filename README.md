@@ -14,6 +14,8 @@
 
 座布団の基本形から二つの耳と尾を作る[設計例](skills/origami-crease-pattern-generator/assets/examples/two-ear-study.json)、[改造手順](skills/origami-crease-pattern-generator/references/base-adaptation.md)、[各基本形の折り方](skills/origami-crease-pattern-generator/references/base-fold-sequences.md)を収録しています。
 
+正方形一枚で作るキツネの顔では、耳の間隔と額の折り方を変えた4案を比較しました。採用した案は、紙の裏色が左右の頬に出ます。[4案の折り上がり](skills/origami-crease-pattern-generator/assets/examples/fox-face/paper.svg)・[採用案の折り図](skills/origami-crease-pattern-generator/assets/examples/fox-face/fold-guide.svg)・[作り方と比較結果](skills/origami-crease-pattern-generator/references/fox-face-study.md)
+
 通常は1件の展開図を扱うStandardモードを使います。次の要求がある場合だけ、同じスキル内のProductionモードへ進みます。
 
 - 複数候補の探索とバッチ評価

@@ -1,0 +1,8 @@
+{
+  "name": "wide-set",
+  "parameters": {
+    "ear_root": 0.79,
+    "ear_slope": 0.43,
+    "muzzle_depth": 0.17
+  }
+}

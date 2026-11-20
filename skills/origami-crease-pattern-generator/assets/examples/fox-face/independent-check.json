@@ -1,0 +1,63 @@
+{
+  "solver": "Flat-Folder",
+  "version": "official-offline-snapshot-sha256:091acbaf09d167f6d903807b158ebdb9aee7c72533c33a247eee2c253ed4c935;adapter-sha256:205735f2b559853595e27a9f3bd96fdf4093fa9271916d17f17e1ebdef57f800;wrapper-sha256:6efbb9b65f046a07cba9f99de163771dbea1062898458b73b615c0437ac1c494",
+  "paper_units": "1000 units per side",
+  "assignment_convention": "All source edges matched. The importer's opposite-side convention reverses all mountain and valley signs together.",
+  "audited_features": [
+    "left_ear",
+    "right_ear",
+    "left_cheek",
+    "right_cheek",
+    "nose"
+  ],
+  "variants": {
+    "balanced": {
+      "candidate_sha256": "295244d30247e523642dcfb4d1ba3c08e720ab243c26aa7d0f217f6f7ec8fe4a",
+      "global_state_found": true,
+      "geometry_passed": true,
+      "vertices": 12,
+      "edges": 18,
+      "faces": 7,
+      "face_area_sum": 1000000.0,
+      "max_face_distance_error": 2.2737367544323206e-13,
+      "distinct_feature_vertices": 5,
+      "feature_vertices_on_outline": 5
+    },
+    "close-set": {
+      "candidate_sha256": "8726c6cbe1d3dc784d703187808a34274ff66576dbbce4b51e39bb172fd96eb3",
+      "global_state_found": true,
+      "geometry_passed": true,
+      "vertices": 12,
+      "edges": 18,
+      "faces": 7,
+      "face_area_sum": 1000000.0,
+      "max_face_distance_error": 1.1368683772161603e-13,
+      "distinct_feature_vertices": 5,
+      "feature_vertices_on_outline": 5
+    },
+    "ruff": {
+      "candidate_sha256": "6f5c0104843f1e1d786bf40cd209799d741afb1be7c18606e6f6279d5e8003b4",
+      "global_state_found": true,
+      "geometry_passed": true,
+      "vertices": 13,
+      "edges": 20,
+      "faces": 8,
+      "face_area_sum": 999999.9999999999,
+      "max_face_distance_error": 2.2737367544323206e-13,
+      "distinct_feature_vertices": 5,
+      "feature_vertices_on_outline": 5
+    },
+    "wide-set": {
+      "candidate_sha256": "024130d8377bb2230e3d139a4956f50464ccdb73f25d009268a0bd04be977ce9",
+      "global_state_found": true,
+      "geometry_passed": true,
+      "vertices": 12,
+      "edges": 18,
+      "faces": 7,
+      "face_area_sum": 1000000.0,
+      "max_face_distance_error": 2.2737367544323206e-13,
+      "distinct_feature_vertices": 5,
+      "feature_vertices_on_outline": 5
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "balanced",
+  "parameters": {
+    "ear_root": 0.65,
+    "ear_slope": 0.48,
+    "muzzle_depth": 0.17
+  }
+}

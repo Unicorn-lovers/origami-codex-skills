@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="330" height="330" viewBox="0 0 330 330">
+<rect width="330" height="330" fill="#faf8f4"/>
+<polygon points="231.139,141.367 179.479,193.027 192.777,141.367" fill="#c46330" stroke="#c46330" stroke-width=".5"/>
+<polygon points="231.139,141.367 263.046,173.273 165.000,249.278 179.479,193.027" fill="#fff3dc" stroke="#fff3dc" stroke-width=".5"/>
+<polygon points="231.139,141.367 192.777,141.367 208.387,80.722 263.046,173.273" fill="#c46330" stroke="#c46330" stroke-width=".5"/>
+<polygon points="179.479,193.027 165.000,207.506 150.521,193.027 137.223,141.367 192.777,141.367" fill="#c46330" stroke="#c46330" stroke-width=".5"/>
+<polygon points="179.479,193.027 165.000,249.278 150.521,193.027 165.000,207.506" fill="#fff3dc" stroke="#fff3dc" stroke-width=".5"/>
+<polygon points="98.861,141.367 66.954,173.273 121.613,80.722 137.223,141.367" fill="#c46330" stroke="#c46330" stroke-width=".5"/>
+<polygon points="150.521,193.027 165.000,249.278 66.954,173.273 98.861,141.367" fill="#fff3dc" stroke="#fff3dc" stroke-width=".5"/>
+<polygon points="150.521,193.027 98.861,141.367 137.223,141.367" fill="#c46330" stroke="#c46330" stroke-width=".5"/>
+<path d="M179.479,193.027 L231.139,141.367" fill="none" stroke="#674e42" stroke-width="1.15" stroke-linejoin="round"/>
+<path d="M192.777,141.367 L231.139,141.367" fill="none" stroke="#674e42" stroke-width="1.15" stroke-linejoin="round"/>
+<path d="M231.139,141.367 L263.046,173.273" fill="none" stroke="#674e42" stroke-width="1.15" stroke-linejoin="round"/>
+<path d="M165.000,249.278 L263.046,173.273" fill="none" stroke="#674e42" stroke-width="1.15" stroke-linejoin="round"/>
+<path d="M192.777,141.367 L208.387,80.722" fill="none" stroke="#674e42" stroke-width="1.15" stroke-linejoin="round"/>
+<path d="M208.387,80.722 L263.046,173.273" fill="none" stroke="#674e42" stroke-width="1.15" stroke-linejoin="round"/>
+<path d="M165.000,207.506 L179.479,193.027" fill="none" stroke="#674e42" stroke-width="1.15" stroke-linejoin="round"/>
+<path d="M150.521,193.027 L165.000,207.506" fill="none" stroke="#674e42" stroke-width="1.15" stroke-linejoin="round"/>
+<path d="M137.223,141.367 L192.777,141.367" fill="none" stroke="#674e42" stroke-width="1.15" stroke-linejoin="round"/>
+<path d="M66.954,173.273 L98.861,141.367" fill="none" stroke="#674e42" stroke-width="1.15" stroke-linejoin="round"/>
+<path d="M121.613,80.722 L66.954,173.273" fill="none" stroke="#674e42" stroke-width="1.15" stroke-linejoin="round"/>
+<path d="M121.613,80.722 L137.223,141.367" fill="none" stroke="#674e42" stroke-width="1.15" stroke-linejoin="round"/>
+<path d="M137.223,141.367 L98.861,141.367" fill="none" stroke="#674e42" stroke-width="1.15" stroke-linejoin="round"/>
+<path d="M165.000,249.278 L66.954,173.273" fill="none" stroke="#674e42" stroke-width="1.15" stroke-linejoin="round"/>
+<path d="M150.521,193.027 L98.861,141.367" fill="none" stroke="#674e42" stroke-width="1.15" stroke-linejoin="round"/>
+</svg>

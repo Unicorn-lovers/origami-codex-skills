@@ -65,6 +65,8 @@ Call the Oriedita result validated only when:
 
 Visually inspect the crease-pattern and folded-figure images. For complex original models, use an independent global solver when available and audit its output with `scripts/audit_folded_state.py`. Read [references/computational-validation.md](references/computational-validation.md) and [references/validation-criteria.md](references/validation-criteria.md) before interpreting the evidence.
 
+When recognition matters, describe the visible cues in the intended view before adjusting the geometry. Compare variants at a common scale without labels, check what the silhouette communicates, and revise the fold responsible for a failed cue. For front-facing pointed-ear animal faces, use the [worked fox study](references/fox-face-study.md) for shape measurements and two-sided paper previews. When the folder supplies photos or observations from a paper trial, use [the paper-feedback workflow](references/paper-feedback.md) to link them to the exact CP and check one change on the next fold.
+
 After several materially similar failures, change topology, simplify the target, or report the limitation. Do not repeat an unchanged search or call an unvalidated pattern complete.
 
 ## Use production mode when required
