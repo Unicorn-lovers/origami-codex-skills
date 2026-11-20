@@ -1,6 +1,6 @@
 ---
 name: origami-crease-pattern-generator
-description: Design, edit, search, and validate editable origami crease patterns. Use for one-off models and revisions, multi-candidate experiments, Oriedita validation, DEFOX folding sequences, or paper-thickness evaluation; do not use for decorative crease-pattern artwork or folding instructions without editable geometry.
+description: Design, edit, search, and validate editable origami crease patterns, including pixel-art origami from an 8×8 bitmap with dotFoldSolver. Use for one-off models and revisions, multi-candidate experiments, Oriedita validation, DEFOX folding sequences, or paper-thickness evaluation; do not use for decorative crease-pattern artwork or folding instructions without editable geometry.
 ---
 
 # 折り紙展開図ジェネレーター
@@ -16,6 +16,8 @@ Produce an editable crease pattern as the primary artifact and evidence appropri
 Both modes use the same geometry, validation criteria, scripts, and final crease-pattern source.
 
 ## Plan the geometry
+
+When the subject is a specified pixel design (ドット絵), route it directly to [pixel-art origami](references/pixel-art.md). Run dotFoldSolver on the original bitmap, then check the visible paper colors against that same bitmap. Choose this route before ranking animal bases, including when the pixels depict an animal.
 
 - Preserve a user-supplied `.cp`, `.fold`, diagram, or exact construction unless the requested change requires new geometry.
 - For a parametric base or tessellation, derive coordinates from shared formulas, symmetry, ratios, and construction constraints.

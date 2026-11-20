@@ -15,7 +15,7 @@ def as_complex(points):
     return [complex(x, y) for x, y in points]
 
 
-def face_transforms(fold):
+def face_transforms(fold, *, active_creases=("M", "V")):
     """Fit an isometry per face by reflecting across each active shared crease."""
     vertices = as_complex(fold["vertices_coords"])
     faces = fold["faces_vertices"]
@@ -39,7 +39,7 @@ def face_transforms(fold):
                     continue
                 if assignments[key] == "F":
                     frames[other] = frames[fid]
-                elif assignments[key] in ("M", "V"):
+                elif assignments[key] in active_creases:
                     a, b = vertices[i], vertices[j]
                     axis = (b - a) / (b - a).conjugate()
                     origin = a - axis * a.conjugate()
