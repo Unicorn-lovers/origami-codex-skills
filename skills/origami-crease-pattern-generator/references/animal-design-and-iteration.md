@@ -71,6 +71,8 @@ Digital and physical evidence answer different questions. A valid CP does not pr
 
 ## 6. Run hypothesis-led iterations
 
+For a worked front-view comparison with editable inputs and computed silhouettes, see [the fox face study](fox-face-study.md). When a folder reports an issue, [record the paper trial](paper-feedback.md) against its geometry and locate the relevant material point.
+
 Keep a ledger with one controlled question per iteration:
 
 | Field | Record |

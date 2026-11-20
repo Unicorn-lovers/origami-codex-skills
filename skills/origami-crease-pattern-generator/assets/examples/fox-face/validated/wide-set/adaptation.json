@@ -1,0 +1,37 @@
+{
+  "base": "diagonal triangle",
+  "candidate_sha256": "024130d8377bb2230e3d139a4956f50464ccdb73f25d009268a0bd04be977ce9",
+  "plan_sha256": "e4fb61fe1727a0c409d61e2061596da8192dde0ef53997718f4124355df042aa",
+  "landmarks_normalized": {
+    "left_ear": [
+      0.0,
+      0.0
+    ],
+    "right_ear": [
+      1.0,
+      1.0
+    ],
+    "left_cheek": [
+      0.10499999999999998,
+      0.10499999999999998
+    ],
+    "right_cheek": [
+      0.895,
+      0.895
+    ],
+    "nose": [
+      0.0,
+      1.0
+    ],
+    "forehead": [
+      0.5,
+      0.5
+    ],
+    "muzzle_patch": [
+      1.0,
+      0.0
+    ]
+  },
+  "validation": "calculated_flat_fold",
+  "physical_trial": "untested"
+}

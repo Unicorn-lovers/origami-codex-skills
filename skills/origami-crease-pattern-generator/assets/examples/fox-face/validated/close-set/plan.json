@@ -1,0 +1,8 @@
+{
+  "name": "close-set",
+  "parameters": {
+    "ear_root": 0.55,
+    "ear_slope": 0.25,
+    "muzzle_depth": 0.17
+  }
+}

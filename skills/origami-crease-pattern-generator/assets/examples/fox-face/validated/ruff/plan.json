@@ -1,0 +1,8 @@
+{
+  "name": "ruff",
+  "route": "ruff",
+  "parameters": {
+    "ear_slope": 1.29,
+    "brow_height": 0.62
+  }
+}

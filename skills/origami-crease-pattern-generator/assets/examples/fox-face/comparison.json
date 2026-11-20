@@ -1,0 +1,280 @@
+{
+  "order": "left to right, then top to bottom",
+  "side": "back",
+  "orange_paper_side": "front",
+  "profile_sha256": "0b77694dd4b4a0092448dc9fcd146bae42165a88ec11173f88059813dc79b0dc",
+  "candidates": [
+    {
+      "position": 1,
+      "id": "close-set",
+      "candidate_sha256": "8726c6cbe1d3dc784d703187808a34274ff66576dbbce4b51e39bb172fd96eb3",
+      "features_sha256": "7d920251631dc858466888cf864c892993cdac7f00e8e1a8f3078540a0de8ac4",
+      "evaluation": {
+        "status": "revise",
+        "score": 70.16,
+        "failed_cues": [
+          "ear_peaks"
+        ],
+        "cues": {
+          "ear_peaks": {
+            "label": "Two triangular ear peaks",
+            "passed": false,
+            "score": 39.16,
+            "measurements": {
+              "ear_angle_max_deg": 45.0,
+              "ear_flank_drop_min": 0.070588,
+              "ear_spacing_min": 0.252427
+            },
+            "outside_threshold": [
+              "ear_spacing_min"
+            ]
+          },
+          "forehead_notch": {
+            "label": "Dip between the ears",
+            "passed": true,
+            "score": 76.49,
+            "measurements": {
+              "notch_depth_min": 0.174757
+            },
+            "outside_threshold": []
+          },
+          "bilateral": {
+            "label": "Balanced left and right silhouette",
+            "passed": true,
+            "score": 100,
+            "measurements": {
+              "symmetry_error_max": 0.0
+            },
+            "outside_threshold": []
+          },
+          "muzzle_taper": {
+            "label": "Cheeks narrow toward the nose",
+            "passed": true,
+            "score": 65.0,
+            "measurements": {
+              "muzzle_width_ratio_max": 0.512821,
+              "nose_angle_max_deg": 90.0
+            },
+            "outside_threshold": []
+          }
+        },
+        "frame": {
+          "nose": [
+            0.0,
+            1000.0
+          ],
+          "height": 856.847040731934,
+          "up": [
+            0.7071067811865474,
+            -0.7071067811865477
+          ],
+          "right": [
+            0.7071067811865477,
+            0.7071067811865474
+          ]
+        }
+      }
+    },
+    {
+      "position": 2,
+      "id": "balanced",
+      "candidate_sha256": "295244d30247e523642dcfb4d1ba3c08e720ab243c26aa7d0f217f6f7ec8fe4a",
+      "features_sha256": "ec3af8e6c3620b590c74bcf2e24da517f6c8f3242976a392824ff08a264941b6",
+      "evaluation": {
+        "status": "pass",
+        "score": 85.07,
+        "failed_cues": [],
+        "cues": {
+          "ear_peaks": {
+            "label": "Two triangular ear peaks",
+            "passed": true,
+            "score": 86.36,
+            "measurements": {
+              "ear_angle_max_deg": 45.0,
+              "ear_flank_drop_min": 0.117035,
+              "ear_spacing_min": 0.677222
+            },
+            "outside_threshold": []
+          },
+          "forehead_notch": {
+            "label": "Dip between the ears",
+            "passed": true,
+            "score": 88.91,
+            "measurements": {
+              "notch_depth_min": 0.214505
+            },
+            "outside_threshold": []
+          },
+          "bilateral": {
+            "label": "Balanced left and right silhouette",
+            "passed": true,
+            "score": 100,
+            "measurements": {
+              "symmetry_error_max": 0.0
+            },
+            "outside_threshold": []
+          },
+          "muzzle_taper": {
+            "label": "Cheeks narrow toward the nose",
+            "passed": true,
+            "score": 65.0,
+            "measurements": {
+              "muzzle_width_ratio_max": 0.471698,
+              "nose_angle_max_deg": 90.0
+            },
+            "outside_threshold": []
+          }
+        },
+        "frame": {
+          "nose": [
+            0.0,
+            1000.0
+          ],
+          "height": 900.2048618752796,
+          "up": [
+            0.7071067811865475,
+            -0.7071067811865475
+          ],
+          "right": [
+            0.7071067811865475,
+            0.7071067811865475
+          ]
+        }
+      }
+    },
+    {
+      "position": 3,
+      "id": "wide-set",
+      "candidate_sha256": "024130d8377bb2230e3d139a4956f50464ccdb73f25d009268a0bd04be977ce9",
+      "features_sha256": "49684b2c8e13713830a384dfa43f6ce833fc606c0f510a8798696fbf91b6b279",
+      "evaluation": {
+        "status": "pass",
+        "score": 80.16,
+        "failed_cues": [],
+        "cues": {
+          "ear_peaks": {
+            "label": "Two triangular ear peaks",
+            "passed": true,
+            "score": 92.41,
+            "measurements": {
+              "ear_angle_max_deg": 52.587345,
+              "ear_flank_drop_min": 0.10887,
+              "ear_spacing_min": 1.120322
+            },
+            "outside_threshold": []
+          },
+          "forehead_notch": {
+            "label": "Dip between the ears",
+            "passed": true,
+            "score": 63.21,
+            "measurements": {
+              "notch_depth_min": 0.132259
+            },
+            "outside_threshold": []
+          },
+          "bilateral": {
+            "label": "Balanced left and right silhouette",
+            "passed": true,
+            "score": 100,
+            "measurements": {
+              "symmetry_error_max": 0.0
+            },
+            "outside_threshold": []
+          },
+          "muzzle_taper": {
+            "label": "Cheeks narrow toward the nose",
+            "passed": true,
+            "score": 65.0,
+            "measurements": {
+              "muzzle_width_ratio_max": 0.3663,
+              "nose_angle_max_deg": 90.0
+            },
+            "outside_threshold": []
+          }
+        },
+        "frame": {
+          "nose": [
+            0.0,
+            1000.0
+          ],
+          "height": 814.8825299263495,
+          "up": [
+            0.7071067811865475,
+            -0.7071067811865475
+          ],
+          "right": [
+            0.7071067811865475,
+            0.7071067811865475
+          ]
+        }
+      }
+    },
+    {
+      "position": 4,
+      "id": "ruff",
+      "candidate_sha256": "6f5c0104843f1e1d786bf40cd209799d741afb1be7c18606e6f6279d5e8003b4",
+      "features_sha256": "2fa94c0187e5f474b4e18dd7f8bf63806d20b3f7fe78314cebf3476b5c0b8910",
+      "evaluation": {
+        "status": "pass",
+        "score": 79.72,
+        "failed_cues": [],
+        "cues": {
+          "ear_peaks": {
+            "label": "Two triangular ear peaks",
+            "passed": true,
+            "score": 68.31,
+            "measurements": {
+              "ear_angle_max_deg": 45.0,
+              "ear_flank_drop_min": 0.129158,
+              "ear_spacing_min": 0.514806
+            },
+            "outside_threshold": []
+          },
+          "forehead_notch": {
+            "label": "Dip between the ears",
+            "passed": true,
+            "score": 100,
+            "measurements": {
+              "notch_depth_min": 0.35979
+            },
+            "outside_threshold": []
+          },
+          "bilateral": {
+            "label": "Balanced left and right silhouette",
+            "passed": true,
+            "score": 100,
+            "measurements": {
+              "symmetry_error_max": 0.0
+            },
+            "outside_threshold": []
+          },
+          "muzzle_taper": {
+            "label": "Cheeks narrow toward the nose",
+            "passed": true,
+            "score": 50.57,
+            "measurements": {
+              "muzzle_width_ratio_max": 0.333333,
+              "nose_angle_max_deg": 104.434758
+            },
+            "outside_threshold": []
+          }
+        },
+        "frame": {
+          "nose": [
+            -119.99999999999989,
+            1120.0
+          ],
+          "height": 684.7849162816922,
+          "up": [
+            0.7071067811865471,
+            -0.7071067811865479
+          ],
+          "right": [
+            0.7071067811865479,
+            0.7071067811865471
+          ]
+        }
+      }
+    }
+  ]
+}

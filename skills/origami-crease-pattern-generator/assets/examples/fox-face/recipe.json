@@ -1,0 +1,8 @@
+{
+  "variants": [
+    {"name": "close-set", "parameters": {"ear_root": 0.55, "ear_slope": 0.25, "muzzle_depth": 0.17}},
+    {"name": "balanced", "parameters": {"ear_root": 0.65, "ear_slope": 0.48, "muzzle_depth": 0.17}},
+    {"name": "wide-set", "parameters": {"ear_root": 0.79, "ear_slope": 0.43, "muzzle_depth": 0.17}},
+    {"name": "ruff", "route": "ruff", "parameters": {"ear_slope": 1.29, "brow_height": 0.62}}
+  ]
+}

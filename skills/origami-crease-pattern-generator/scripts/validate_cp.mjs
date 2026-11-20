@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { randomBytes } from "node:crypto";
+import { createHash, randomBytes } from "node:crypto";
 import { spawn, spawnSync } from "node:child_process";
 import { closeSync, existsSync, openSync, readdirSync } from "node:fs";
 import { mkdir, mkdtemp, readFile, rm, stat, unlink, writeFile } from "node:fs/promises";
@@ -166,14 +166,14 @@ async function connectToOriedita({ jarFile, javaCommand, runtimeDirectory, logFi
   child.unref();
   closeSync(logDescriptor);
 
-  const deadline = Date.now() + 30_000;
+  const deadline = Date.now() + 60_000;
   while (Date.now() < deadline) {
     const connection = await readConnection(connectionFile);
     if (connection?.token === token && await healthy(connection)) return { connection, launched: true, child };
     await sleep(150);
   }
   if (isolated) child.kill();
-  throw new Error(`Oriedita did not become ready within 30 seconds; see ${logFile}`);
+  throw new Error(`Oriedita did not become ready within 60 seconds; see ${logFile}`);
 }
 
 const options = parseArgs(process.argv.slice(2));
@@ -201,9 +201,12 @@ if (!options.force) {
 }
 await mkdir(outDir, { recursive: true });
 
-let syntax;
+const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
+let syntax, inputHash;
 try {
-  syntax = inspectCp(await readFile(input, "utf8"));
+  const source = await readFile(input);
+  inputHash = digest(source);
+  syntax = inspectCp(source.toString("utf8"));
 } catch (error) {
   usage(error instanceof Error ? error.message : String(error));
 }
@@ -217,6 +220,7 @@ const report = {
   success: false,
   validatedAt: new Date().toISOString(),
   input,
+  input_sha256: inputHash,
   jar: jarFile,
   transport: "Oriedita local control bridge",
   syntax,
@@ -284,6 +288,10 @@ try {
     if (modelInspected) {
       await writeFile(outputs.foldedModel, JSON.stringify(foldedModel));
       report.evidence.foldedModel = outputs.foldedModel;
+      report.evidence_sha256 = {
+        fold: digest(await readFile(outputs.fold)),
+        foldedModel: digest(await readFile(outputs.foldedModel)),
+      };
     }
   }
   report.evidence.foldedFigurePng = foldedImage ? outputs.foldedFigure : null;
@@ -297,6 +305,10 @@ try {
     && report.oriedita.completed
     && foldedImage
     && modelInspected;
+  if (digest(await readFile(input)) !== inputHash) {
+    report.success = false;
+    report.error = "CP changed during validation";
+  }
 } catch (error) {
   report.error = error instanceof Error ? error.message : String(error);
 } finally {

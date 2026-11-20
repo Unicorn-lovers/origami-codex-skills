@@ -1,0 +1,28 @@
+{
+  "success": true,
+  "validatedAt": "2026-11-20T14:30:58.468Z",
+  "input_sha256": "295244d30247e523642dcfb4d1ba3c08e720ab243c26aa7d0f217f6f7ec8fe4a",
+  "syntax": {
+    "lineCount": 18,
+    "assignments": {
+      "edge": 10,
+      "mountain": 5,
+      "valley": 3
+    }
+  },
+  "evidence_sha256": {
+    "fold": "fa08dc65ef44114bf262804bd9f698e9693db1b0d1e569bc78a29c57187931cd",
+    "foldedModel": "a1d13f480179dc70b35552746a3a0e8fe8efe2e6d06f2805484a140d87e6955e"
+  },
+  "oriedita": {
+    "launchedByValidator": true,
+    "documentLineCount": 18,
+    "calculation": {
+      "started": true,
+      "violationCount": 0
+    },
+    "foldedModelReturned": true,
+    "version": "1.1.4-SNAPSHOT",
+    "completed": true
+  }
+}
