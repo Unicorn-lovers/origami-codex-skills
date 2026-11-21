@@ -74,6 +74,8 @@ Visually inspect the crease-pattern and folded-figure images. For complex origin
 
 When recognition matters, describe the visible cues in the intended view before adjusting the geometry. Compare variants at a common scale without labels, check what the silhouette communicates, and revise the fold responsible for a failed cue. For front-facing pointed-ear animal faces, use the [worked fox study](references/fox-face-study.md) for shape measurements and two-sided paper previews. When the folder supplies photos or observations from a paper trial, use [the paper-feedback workflow](references/paper-feedback.md) to link them to the exact CP and check one change on the next fold.
 
+For a modified subject, inspect an unlabelled view of the actual candidate in its intended pose before presenting it as the result. The host must remain identifiable and the added part must be visible on it. A flat base may still need shaping. If the view only demonstrates accessible flaps, label it as a structural trial and keep looking for a source or pose that shows the subject. A source photograph illustrates only that source.
+
 After several materially similar failures, change topology, simplify the target, or report the limitation. Do not repeat an unchanged search or call an unvalidated pattern complete.
 
 ## Use production mode when required
