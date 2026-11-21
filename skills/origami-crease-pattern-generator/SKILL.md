@@ -1,6 +1,6 @@
 ---
 name: origami-crease-pattern-generator
-description: Design, edit, search, and validate editable origami crease patterns, including one-sheet pixel-art origami from 8×8 and 16×16 bitmaps. Use for one-off models and revisions, multi-candidate experiments, Oriedita validation, DEFOX folding sequences, or paper-thickness evaluation; do not use for decorative crease-pattern artwork or folding instructions without editable geometry.
+description: Design, edit, search, and validate origami crease patterns. Find a subject in a personal pattern library, adapt its geometry, and verify it with Oriedita. Also supports 8×8 and 16×16 pixel art, candidate comparison, DEFOX sequences and paper-thickness evaluation.
 ---
 
 # 折り紙展開図ジェネレーター
@@ -23,7 +23,7 @@ For an opaque 16×16 PNG with two colors and no specified foreground, use the im
 
 - Preserve a user-supplied `.cp`, `.fold`, diagram, or exact construction unless the requested change requires new geometry.
 - For a tessellation, pleated vessel, or modular assembly, choose the repeating twist, profile strip, or connecting unit using [designing repeating structures](references/repeating-structures.md). Test how neighbors meet before filling the sheet. Preserve the requested sheet shape and number of pieces.
-- For a representational subject requested only by name, read [references/base-library.md](references/base-library.md) and [references/novel-subject-workflow.md](references/novel-subject-workflow.md). Plan named features, rank the bundled bases, and compare adaptation plans before drawing a new flap tree.
+- For a named subject, especially a combination such as a cat with wings, search the registered [personal pattern library](references/pattern-library.md) for the underlying animal or object. Check the source CP and any matching book figure. Preserve the identifying parts, edit a working copy and verify the new CP. When the collection lacks suitable source geometry, compare the [bundled bases](references/base-library.md) and use the [novel subject workflow](references/novel-subject-workflow.md).
 - Prefer a verified base adaptation when it covers every essential tip and surface with local changes. Design from scratch when all candidates have essential blockers or require a global topology rewrite.
 - For a selected base, use [the adaptation workflow](references/base-adaptation.md) to turn the feature assignments into an edited CP and labelled paper/folded views. Consult [base folding sequences](references/base-fold-sequences.md) for the original collapse and its landmark checks.
 - For an original animal or creature, also read [references/animal-design-and-iteration.md](references/animal-design-and-iteration.md) when subject analysis, allocation alternatives, ratio choice, material choice, or physical iteration matters. Use those methods as heuristics, never as permission to copy reference geometry.
