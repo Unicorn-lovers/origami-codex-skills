@@ -2,7 +2,7 @@
 
 import { createHash, randomBytes } from "node:crypto";
 import { spawn, spawnSync } from "node:child_process";
-import { closeSync, existsSync, openSync, readdirSync } from "node:fs";
+import { closeSync, existsSync, openSync, readdirSync, readFileSync } from "node:fs";
 import { mkdir, mkdtemp, readFile, rm, stat, unlink, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -45,6 +45,13 @@ function jarsIn(targetDirectory) {
 }
 
 function findJar(explicit) {
+  const configHome = process.env.CODEX_HOME || path.join(os.homedir(), ".codex");
+  let registeredJar;
+  try {
+    registeredJar = JSON.parse(readFileSync(path.join(configHome, "origami-pattern-library.json"), "utf8")).oriedita_jar;
+  } catch {
+    // The private library is optional.
+  }
   const projectTargets = [
     path.join(os.homedir(), "Documents/oriedita/oriedita/target"),
     path.join(os.homedir(), "Library/Mobile Documents/com~apple~CloudDocs/Documents/oriedita/oriedita/target"),
@@ -53,6 +60,7 @@ function findJar(explicit) {
     explicit,
     process.env.ORIEDITA_JAR,
     ...projectTargets.flatMap(jarsIn),
+    typeof registeredJar === "string" ? registeredJar : null,
   ].filter(Boolean).map((candidate) => path.resolve(candidate));
   return candidates.find((candidate) => existsSync(candidate));
 }

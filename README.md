@@ -14,7 +14,9 @@
 
 基本形のカドが足りないときや、閉じると内側に埋もれるときの[展開図の修正方法](skills/origami-crease-pattern-generator/references/design-revisions.md)を収録しています。[繰り返し構造の設計](skills/origami-crease-pattern-generator/references/repeating-structures.md)では、ひねり模様の接続、器の断面から求める蛇腹の寸法、ユニットの差し込みと配色を扱います。
 
-題材名から設計するときは、鶴・カエル・魚・正方・風船・座布団・凧・風車の8基本形を比較し、頭や脚、尾に使う紙の位置と重なりを調べます。候補を選ぶと、角を開く、向きを変える、二つの先端に分けるといった操作を展開図に反映し、Orieditaで折り上がりを検証できます。
+「羽の生えた猫」などの指定では、まず[手元の展開図ライブラリ](skills/origami-crease-pattern-generator/references/pattern-library.md)から猫の原図を検索します。編集できるCP・FOLDと書籍の該当ページを引き、元の折り上がりを確認してから両翼を加えた候補をOrieditaで検証します。元図のファイルは各自の端末で登録できます。
+
+条件に合う元図がないときは、鶴・カエル・魚・正方・風船・座布団・凧・風車の8基本形を比較し、頭や脚、尾に使う紙の位置と重なりを調べます。候補を選ぶと、角を開く、向きを変える、二つの先端に分けるといった操作を展開図に反映し、Orieditaで折り上がりを検証できます。
 
 座布団の基本形から二つの耳と尾を作る[設計例](skills/origami-crease-pattern-generator/assets/examples/two-ear-study.json)、[改造手順](skills/origami-crease-pattern-generator/references/base-adaptation.md)、[各基本形の折り方](skills/origami-crease-pattern-generator/references/base-fold-sequences.md)を収録しています。
 
