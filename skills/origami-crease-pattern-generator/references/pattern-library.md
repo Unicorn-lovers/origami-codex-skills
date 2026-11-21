@@ -13,6 +13,10 @@ python3 scripts/pattern_library.py show CP005122
 
 元図を再作図した版や以前の改造が登録されている場合は `derived_pattern_ids` から開ける。手元でOrieditaの計算を終えた候補には `validation_report` が付く。該当する資料が少ないときは別名や英語名でも探す。
 
+改造後の姿を判定するときは、部位名、色分け、印を外し、実際の紙面の表裏と重なりを描いた画像か、同じ候補を折った写真を見る。例えば「羽の生えた猫」なら、羽を隠しても顔・耳・胴や尾から猫の姿を読み取れるか、その猫の背から翼が出ているかを確かめる。原作の完成写真と派生案の折り上がりは別々に確認する。
+
+確認結果は私用ライブラリの `catalog/recognition.jsonl` に、対象の `id`、`sha256`、`recognition_status`、表示画像の相対パス `recognition_image`、根拠 `recognition_notes` を1行で記録できる。姿を確認できた候補は `recognized`、紙の取り出しを試した段階は `structure_only`、見直しても題材を読み取れない場合は `not_recognizable` とする。検索はこの記録を使い、形の確認が済んだ改造候補を優先する。
+
 ## 元図を検証して、必要な部分だけを変える
 
 ```bash

@@ -35,6 +35,25 @@ class PatternLibraryTest(unittest.TestCase):
         self.assertEqual(result["matches"][0]["id"], "C1")
         self.assertEqual(result["also_in_book"][0]["sequence_pages"], [41, 46])
 
+    def test_local_variant_needs_visible_subject_before_ranking_as_a_match(self):
+        candidate = dict(id="D1", title="Winged cat", format="cp", path="cat.cp", cp_ready=True,
+                         parent_id="C1", source_type="local", subjects=["cat", "wings"],
+                         validation_status="oriedita_flat_state_completed", sha256=self.original_hash)
+        (self.root / "catalog/designs.jsonl").write_text(json.dumps(candidate))
+        args = argparse.Namespace(subject="winged cat", base=None, limit=1, source=None, ready=True, sequences=False)
+        self.assertEqual(search(self.root, args)["matches"][0]["id"], "C1")
+        review = dict(id="D1", sha256=self.original_hash, recognition_status="recognized",
+                      recognition_image="view.png")
+        index = self.root / "catalog/recognition.jsonl"
+        index.write_text(json.dumps(review))
+        self.assertEqual(search(self.root, args)["matches"][0]["id"], "C1")
+        (self.root / "view.png").touch()
+        self.assertEqual(search(self.root, args)["matches"][0]["id"], "D1")
+        index.write_text(json.dumps(dict(review, recognition_status="not_recognizable")))
+        self.assertEqual(search(self.root, args)["matches"][0]["id"], "C1")
+        args.subject = "D1"
+        self.assertEqual(search(self.root, args)["matches"][0]["recognition_status"], "not_recognizable")
+
     def test_checkout_preserves_hash_and_omits_only_flat_edges(self):
         dest = self.root / "work"
         args = argparse.Namespace(id="C1", out_dir=dest, validate_base=False)

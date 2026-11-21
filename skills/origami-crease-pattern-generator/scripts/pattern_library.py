@@ -56,6 +56,14 @@ def library_path(explicit):
 
 def records(root):
     seen = set()
+    reviews = {}
+    review_index = root/"catalog/recognition.jsonl"
+    if review_index.is_file():
+        with review_index.open(encoding="utf-8-sig") as stream:
+            for line in stream:
+                if line.strip():
+                    review = json.loads(line)
+                    reviews[review["id"], review["sha256"]] = review
     derivatives = {}
     for name in ("catalog/local.jsonl", "catalog/designs.jsonl"):
         src = root/name
@@ -97,6 +105,10 @@ def records(root):
                 report = verified.get((item["id"], item.get("sha256")))
                 if report:
                     item.update(validation_status="oriedita_flat_state_completed", validation_report=report)
+                review = reviews.get((item["id"], item.get("sha256") or item.get("source_sha256")))
+                if review:
+                    item.update({k: review[k] for k in (
+                        "recognition_status", "recognition_image", "recognition_notes") if k in review})
                 yield item
     if not seen:
         raise ValueError(f"no pattern records in {root}")
@@ -113,7 +125,8 @@ def record_path(root, item):
 def summary(root, item):
     fields = ("id", "title", "kind", "format", "subjects", "assignment_status",
               "geometry_status", "page", "page_end", "crop_box", "folding_sequence_id", "sequence_pages",
-              "parent_id", "derived_pattern_ids", "validation_status", "validation_report")
+              "parent_id", "derived_pattern_ids", "validation_status", "validation_report",
+              "recognition_status", "recognition_image", "recognition_notes")
     return {**{k: item[k] for k in fields if k in item}, "source": origin(item),
             "cp_ready": bool(item.get("cp_ready")), "path": str(record_path(root, item))}
 
@@ -158,7 +171,12 @@ def search(root, args):
             continue
         named_variant = host != subject and (contains(title, subject) or
                         (asks_for_wings and tag_match and bool(tags & {"wing", "wings", "winged", "翼", "羽"})))
-        score = (exact_id, named_variant, bool(item.get("cp_ready")), exact_title,
+        status = item.get("recognition_status")
+        reviewed_image = item.get("recognition_image")
+        confirmed = status == "recognized" and bool(reviewed_image) and (root/reviewed_image).is_file()
+        unconfirmed_design = named_variant and origin(item) == "local" and not confirmed
+        usable_subject = status not in {"not_recognizable", "structure_only"} and not unconfirmed_design
+        score = (exact_id, usable_subject, named_variant, confirmed, bool(item.get("cp_ready")), exact_title,
                  item.get("validation_status") == "oriedita_flat_state_completed",
                  title in aliases, tag_match, item.get("kind") != "folding_sequence",
                  item.get("format") == "cp", -item.get("segments", 0))
