@@ -22,11 +22,12 @@ When the subject is a specified pixel design (ドット絵), run `scripts/dotfol
 For an opaque 16×16 PNG with two colors and no specified foreground, use the importer’s color choice. If it inferred the foreground from the border and the first search did not match, retry the original PNG once with the other RGB as `--foreground` in a fresh output directory when the remaining search budget allows. Honor any specified color roles, total time or candidate caps, and report which color produced the delivered result.
 
 - Preserve a user-supplied `.cp`, `.fold`, diagram, or exact construction unless the requested change requires new geometry.
-- For a parametric base or tessellation, derive coordinates from shared formulas, symmetry, ratios, and construction constraints.
-- For a subject requested only by name, read [references/base-library.md](references/base-library.md) and [references/novel-subject-workflow.md](references/novel-subject-workflow.md). Plan named features, rank the bundled bases, and compare adaptation plans before drawing a new flap tree.
+- For a tessellation, pleated vessel, or modular assembly, choose the repeating twist, profile strip, or connecting unit using [designing repeating structures](references/repeating-structures.md). Test how neighbors meet before filling the sheet. Preserve the requested sheet shape and number of pieces.
+- For a representational subject requested only by name, read [references/base-library.md](references/base-library.md) and [references/novel-subject-workflow.md](references/novel-subject-workflow.md). Plan named features, rank the bundled bases, and compare adaptation plans before drawing a new flap tree.
 - Prefer a verified base adaptation when it covers every essential tip and surface with local changes. Design from scratch when all candidates have essential blockers or require a global topology rewrite.
 - For a selected base, use [the adaptation workflow](references/base-adaptation.md) to turn the feature assignments into an edited CP and labelled paper/folded views. Consult [base folding sequences](references/base-fold-sequences.md) for the original collapse and its landmark checks.
 - For an original animal or creature, also read [references/animal-design-and-iteration.md](references/animal-design-and-iteration.md) when subject analysis, allocation alternatives, ratio choice, material choice, or physical iteration matters. Use those methods as heuristics, never as permission to copy reference geometry.
+- If a base has a tip in the wrong place, a buried appendage, a missing color boundary, or a hard-to-locate crease, use [diagnosing and revising a crease pattern](references/design-revisions.md). It also covers selective precreasing and illustrating the layers after a sink.
 - Treat every change to a bundled base or [assets/examples/validated-crane-base.cp](assets/examples/validated-crane-base.cp) as a new candidate. Its previous validation does not transfer to the derivative.
 
 If the user supplies a designer, article set, blog, or body of work as a reference, read [references/research-and-provenance.md](references/research-and-provenance.md). Record what was reviewed, extract reusable principles, and do not copy another creator's crease pattern as the new model. For a large image set, also read [references/research-image-index.md](references/research-image-index.md) and use `scripts/make_contact_sheet.py`.
@@ -51,6 +52,8 @@ Maintain these invariants:
 For an original multi-flap subject, keep a machine-readable feature map. Copy [assets/templates/subject-design-brief.md](assets/templates/subject-design-brief.md) and [assets/templates/features.json](assets/templates/features.json) when useful, replacing every placeholder.
 
 ## Validate the adopted pattern
+
+Match the check to the intended state. For a modular assembly, validate a flat unit where applicable, then assess the joints and assembly separately. For a curved pleated vessel, keep the editable profile and crease geometry, identify any straight-segment approximation used in the CP, and check the intended three-dimensional sections and seam on a folded sample.
 
 When Oriedita MCP is available, read [references/oriedita-mcp.md](references/oriedita-mcp.md) and validate the exact adopted CP without taking over unrelated unsaved work. Otherwise run:
 
